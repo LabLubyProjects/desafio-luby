@@ -18,20 +18,8 @@ export enum EmployeeType {
 export default class EmployeeImpl implements Employee {
 
   id: string;
-  cpf: string;
-  name: string;
-  email: string;
-  biography: string;
-  password: string;
-  type: EmployeeType;
 
-  constructor(cpf: string, name: string, email: string, biography: string, password: string, type: EmployeeType, id?: string) {
+  constructor(public cpf: string, public name: string, public email: string, public biography: string, public password: string, public type: EmployeeType, id?: string) {
     id ? this.id = id : this.id = v4();
-    this.cpf = cpf;
-    this.name = name;
-    this.email = email;
-    this.biography = biography;
-    this.password = password;
-    this.type = type;
   }
 }
