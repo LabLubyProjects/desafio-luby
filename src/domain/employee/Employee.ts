@@ -14,7 +14,7 @@ export enum EmployeeType {
   SELLER = 2
 }
 
-export class EmployeeImpl implements Employee {
+export default class EmployeeImpl implements Employee {
 
   id: string;
   cpf: string;
