@@ -9,11 +9,15 @@ export interface InputCreateEmployee {
   type: EmployeeType;
 }
 
-export interface OutputCreateEmployee {
+export interface OutputEmployee {
   id: string;
   cpf: string;
   name: string;
   email: string;
   biography: string;
   type: EmployeeType;
+}
+
+export interface InputGetEmployeeByID {
+  id: string;
 }
