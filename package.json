@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "Desafio de estágio Luby",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
+    "start:dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules 'src/external/http/express/main.ts'"
+  },
   "author": "Breno Vergilio",
   "license": "ISC",
   "devDependencies": {
