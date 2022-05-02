@@ -7,11 +7,12 @@ export interface Employee {
   email: string;
   biography: string;
   password: string;
+  type: EmployeeType;
 }
 
 export enum EmployeeType {
-  ADMIN = 1,
-  SELLER = 2
+  ADMIN,
+  SELLER
 }
 
 export default class EmployeeImpl implements Employee {
