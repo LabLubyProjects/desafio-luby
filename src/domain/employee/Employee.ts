@@ -26,8 +26,7 @@ export default class EmployeeImpl implements Employee {
   type: EmployeeType;
 
   constructor(cpf: string, name: string, email: string, biography: string, password: string, type: EmployeeType, id?: string) {
-    if(!id) this.id = v4();
-    else this.id = id;
+    id ? this.id = id : this.id = v4();
     this.cpf = cpf;
     this.name = name;
     this.email = email;

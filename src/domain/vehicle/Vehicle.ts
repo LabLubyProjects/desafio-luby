@@ -30,8 +30,7 @@ export default class VehicleImpl implements Vehicle {
   status: VehicleStatus;
   
   constructor(brand: string, model: string, year: number, km: number, color: string, chassi: string, price: number, status: VehicleStatus, id?: string) {
-    if(!id) this.id = v4();
-    else this.id = id;
+    id ? this.id = id : this.id = v4();
     this.brand = brand;
     this.model = model;
     this.year = year;
