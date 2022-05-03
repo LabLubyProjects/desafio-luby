@@ -1,4 +1,3 @@
-import { EmployeeType } from "@src/domain/employee/Employee";
 import NotFoundError from "../errors/NotFoundError";
 import UnauthorizedError from "../errors/UnauthorizedError";
 import BaseEmployeeRelatedUseCase from "./BaseEmployeeRelatedUseCase";
@@ -9,7 +8,7 @@ export default class DeleteEmployeeUseCase extends BaseEmployeeRelatedUseCase {
     const sourceEmployee = await this.employeeRepository.getByID(inputDeleteEmployee.sourceEmployeeID);
     const targetEmployeeID = await this.employeeRepository.getByID(inputDeleteEmployee.targetEmployeeID);
     if(!sourceEmployee || !targetEmployeeID) throw new NotFoundError();
-    if(sourceEmployee.type !== EmployeeType.ADMIN) throw new UnauthorizedError();
+    if(!sourceEmployee.isAdmin()) throw new UnauthorizedError();
 
     await this.employeeRepository.delete(inputDeleteEmployee.targetEmployeeID);
   }

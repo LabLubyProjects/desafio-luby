@@ -8,6 +8,7 @@ export interface Employee {
   biography: string;
   password: string;
   type: EmployeeType;
+  isAdmin(): boolean;
 }
 
 export enum EmployeeType {
@@ -21,5 +22,9 @@ export default class EmployeeImpl implements Employee {
 
   constructor(public cpf: string, public name: string, public email: string, public biography: string, public password: string, public type: EmployeeType, id?: string) {
     id ? this.id = id : this.id = v4();
+  }
+
+  isAdmin(): boolean {
+    return this.type === EmployeeType.ADMIN;
   }
 }

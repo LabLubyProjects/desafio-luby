@@ -13,7 +13,7 @@ export default class CreateEmployeeUseCase extends BaseEmployeeRelatedUseCase {
 
     const inputCreateEmployee = new EmployeeImpl(inputNewEmployee.cpf, inputNewEmployee.name, inputNewEmployee.email, inputNewEmployee.biography, inputNewEmployee.password, inputNewEmployee.type);
     const newEmplyoee = await this.employeeRepository.create(inputCreateEmployee);
-    const outputCreateEmployee: OutputEmployee = { id: newEmplyoee.id, cpf: newEmplyoee.cpf, name: newEmplyoee.name, email: newEmplyoee.email, biography: newEmplyoee.biography, type: newEmplyoee.type };
-    return outputCreateEmployee;
+    const outputEmployee: OutputEmployee = { id: newEmplyoee.id, cpf: newEmplyoee.cpf, name: newEmplyoee.name, email: newEmplyoee.email, biography: newEmplyoee.biography, type: newEmplyoee.type };
+    return outputEmployee;
   }
 }
