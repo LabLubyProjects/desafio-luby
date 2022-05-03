@@ -1,7 +1,8 @@
 import { DataTypes } from "sequelize/types";
 import { db } from "../database";
+import SaleModel from "./SaleModel";
 
-export const EmployeeModel = db.define("employee", {
+const EmployeeModel = db.define("employee", {
   id: {
     type: DataTypes.STRING,
     primaryKey: true,
@@ -32,4 +33,8 @@ export const EmployeeModel = db.define("employee", {
     type: DataTypes.INTEGER,
     allowNull: false
   },
-})
+});
+
+EmployeeModel.hasMany(SaleModel);
+
+export default EmployeeModel;

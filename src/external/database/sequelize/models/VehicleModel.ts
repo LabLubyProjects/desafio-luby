@@ -1,7 +1,8 @@
 import { DataTypes } from "sequelize/types"; 
 import { db } from "../database";
+import SaleModel from "./SaleModel";
 
-export const VehicleModel = db.define('vehicle', {
+const VehicleModel = db.define('vehicle', {
   id: {
     type: DataTypes.STRING,
     primaryKey: true,
@@ -39,4 +40,8 @@ export const VehicleModel = db.define('vehicle', {
     type: DataTypes.INTEGER,
     allowNull: false
   },
-})
+});
+
+VehicleModel.hasOne(SaleModel);
+
+export default VehicleModel;
