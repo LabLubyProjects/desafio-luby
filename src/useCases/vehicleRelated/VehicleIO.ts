@@ -20,6 +20,7 @@ export interface OutputVehicle {
   color: string;
   chassi: string;
   price: number;
+  status: string;
 }
 
 export interface InputFilterVehicleByStatus {

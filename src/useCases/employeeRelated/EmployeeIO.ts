@@ -15,7 +15,7 @@ export interface OutputEmployee {
   name: string;
   email: string;
   biography: string;
-  type: EmployeeType;
+  type: string;
 }
 
 export interface InputGetEmployeeByID {

@@ -1,5 +1,6 @@
 import EmployeeImpl from "@src/domain/employee/Employee";
 import AlreadyExistsError from "../errors/AlreadyExistsError";
+import { translateEmployeeType } from "../util/enumTranslators";
 import BaseEmployeeRelatedUseCase from "./BaseEmployeeRelatedUseCase";
 import { InputCreateEmployee, OutputEmployee } from "./EmployeeIO";
 
@@ -13,7 +14,7 @@ export default class CreateEmployeeUseCase extends BaseEmployeeRelatedUseCase {
 
     const inputCreateEmployee = new EmployeeImpl(inputNewEmployee.cpf, inputNewEmployee.name, inputNewEmployee.email, inputNewEmployee.biography, inputNewEmployee.password, inputNewEmployee.type);
     const newEmplyoee = await this.employeeRepository.create(inputCreateEmployee);
-    const outputEmployee: OutputEmployee = { id: newEmplyoee.id, cpf: newEmplyoee.cpf, name: newEmplyoee.name, email: newEmplyoee.email, biography: newEmplyoee.biography, type: newEmplyoee.type };
+    const outputEmployee: OutputEmployee = { id: newEmplyoee.id, cpf: newEmplyoee.cpf, name: newEmplyoee.name, email: newEmplyoee.email, biography: newEmplyoee.biography, type: translateEmployeeType(newEmplyoee.type) };
     return outputEmployee;
   }
 }
