@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize/types";
 import { db } from "../database";
+import ReservationModel from "./ReservationModel";
 import SaleModel from "./SaleModel";
 
 const EmployeeModel = db.define("employee", {
@@ -36,5 +37,6 @@ const EmployeeModel = db.define("employee", {
 });
 
 EmployeeModel.hasMany(SaleModel);
+EmployeeModel.hasMany(ReservationModel);
 
 export default EmployeeModel;

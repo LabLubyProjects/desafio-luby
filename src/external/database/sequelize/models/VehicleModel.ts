@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize/types"; 
 import { db } from "../database";
+import ReservationModel from "./ReservationModel";
 import SaleModel from "./SaleModel";
 
 const VehicleModel = db.define('vehicle', {
@@ -43,5 +44,6 @@ const VehicleModel = db.define('vehicle', {
 });
 
 VehicleModel.hasOne(SaleModel);
+VehicleModel.hasOne(ReservationModel);
 
 export default VehicleModel;
