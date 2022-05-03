@@ -19,7 +19,7 @@ const ReservationModel = db.define('reservation', {
     }
 });
 
-ReservationModel.belongsTo(EmployeeModel);
-ReservationModel.belongsTo(VehicleModel);
+ReservationModel.belongsTo(EmployeeModel, { foreignKey: 'employee_id', as: 'employee_reservation' });
+ReservationModel.belongsTo(VehicleModel, { foreignKey: 'vehicle_id', as: 'vehicle_reservation' });
 
 export default ReservationModel;

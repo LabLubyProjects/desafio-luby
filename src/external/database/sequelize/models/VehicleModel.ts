@@ -43,7 +43,7 @@ const VehicleModel = db.define('vehicle', {
   },
 });
 
-VehicleModel.hasOne(SaleModel);
-VehicleModel.hasOne(ReservationModel);
+VehicleModel.hasOne(SaleModel, { foreignKey: 'vehicle_id', as: 'vehicle_sale' });
+VehicleModel.hasOne(ReservationModel, { foreignKey: 'vehicle_id', as: 'vehicle_reservation' });
 
 export default VehicleModel;

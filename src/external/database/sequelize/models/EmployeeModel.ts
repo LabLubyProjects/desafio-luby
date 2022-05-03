@@ -36,7 +36,7 @@ const EmployeeModel = db.define("employee", {
   },
 });
 
-EmployeeModel.hasMany(SaleModel);
-EmployeeModel.hasMany(ReservationModel);
+EmployeeModel.hasMany(SaleModel, { foreignKey: 'employee_id', as: 'employee_sale' });
+EmployeeModel.hasMany(ReservationModel, { foreignKey: 'employee_id', as: 'employee_reservation' });
 
 export default EmployeeModel;

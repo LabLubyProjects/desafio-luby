@@ -23,7 +23,7 @@ const SaleModel = db.define('sale', {
     }
 });
 
-SaleModel.belongsTo(EmployeeModel);
-SaleModel.belongsTo(VehicleModel);
+SaleModel.belongsTo(EmployeeModel, { foreignKey: 'employee_id', as: 'employee_sale' });
+SaleModel.belongsTo(VehicleModel, { foreignKey: 'vehicle_id', as: 'vehicle_sale' });
 
 export default SaleModel;
