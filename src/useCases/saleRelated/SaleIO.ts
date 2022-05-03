@@ -1,9 +1,11 @@
-import { VehicleStatus } from "@src/domain/vehicle/Vehicle";
-
 export interface InputSell {
   vehicleID: string;
   employeeID: string;
   price: number;
+}
+
+export interface InputGetAllSalesByEmployee {
+  employeeID: string;
 }
 
 export interface OutputSale {
