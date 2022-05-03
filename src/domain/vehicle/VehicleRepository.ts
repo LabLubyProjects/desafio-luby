@@ -5,4 +5,5 @@ export default interface VehicleRepository {
   getByStatus(status: VehicleStatus): Promise<Vehicle[]>;
   getByID(id: string): Promise<Vehicle>;
   create(newVehicle: Vehicle): Promise<Vehicle>;
+  delete(id: string): Promise<void>;
 }

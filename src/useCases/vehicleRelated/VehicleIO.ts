@@ -23,3 +23,8 @@ export interface OutputVehicle {
 export interface InputGetVehicleByID {
   id: string;
 }
+
+export interface InputDeleteVehicle {
+  sourceEmployeeID: string;
+  targetVehicleID: string;
+}
