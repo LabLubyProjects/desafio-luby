@@ -1,3 +1,5 @@
+import { VehicleStatus } from "@src/domain/vehicle/Vehicle";
+
 export interface InputAcquireNewVehicle {
   sourceEmployeeID: string;
   brand: string;
@@ -18,6 +20,10 @@ export interface OutputVehicle {
   color: string;
   chassi: string;
   price: number;
+}
+
+export interface InputFilterVehicleByStatus {
+  status: VehicleStatus;
 }
 
 export interface InputGetVehicleByID {
