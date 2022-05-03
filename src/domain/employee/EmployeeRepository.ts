@@ -6,4 +6,5 @@ export default interface EmployeeRepository {
   getByCPF(cpf: string): Promise<Employee>;
   getByEmail(email: string): Promise<Employee>;
   create(newEmployee: Employee): Promise<Employee>;
+  delete(id: string): Promise<void>;
 }

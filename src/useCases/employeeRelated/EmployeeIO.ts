@@ -21,3 +21,8 @@ export interface OutputEmployee {
 export interface InputGetEmployeeByID {
   id: string;
 }
+
+export interface InputDeleteEmployee {
+  targetEmployeeID: string;
+  sourceEmployeeID: string;
+}
