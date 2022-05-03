@@ -17,6 +17,8 @@
       "removeComments": true,
       "noImplicitReturns": true,
       "esModuleInterop": true,
+      "allowJs": true,
+      "checkJs": false,
       "allowSyntheticDefaultImports": true,
       "baseUrl": ".",
       "paths": {
@@ -29,7 +31,7 @@
       "emitDecoratorMetadata": true
   },
   "include": [
-      "./src/**/*.ts",
+      "./src/**/*.ts", "src/config/databaseConfig.js",
   ],
   "exclude": [
       "./node_modules/*",
