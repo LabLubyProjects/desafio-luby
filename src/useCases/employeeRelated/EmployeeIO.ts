@@ -55,7 +55,7 @@ export class InputDeleteEmployee {
   @IsUUID(4, {message: 'ID do funcionário fonte inválido'})
   sourceEmployeeID: string;
 
-  constructor(targetEmployeeID: string, sourceEmployeeID: string) {
+  constructor(sourceEmployeeID: string, targetEmployeeID: string) {
     this.targetEmployeeID = targetEmployeeID;
     this.sourceEmployeeID = sourceEmployeeID;
   }
@@ -97,7 +97,10 @@ export interface OutputLoginEmployee {
 }
 
 export class InputUpdateEmployee {
-  @IsUUID(4, {message: 'ID do funcionário inválido'})
+  @IsUUID(4, {message: 'ID do funcionário fonte inválido'})
+  sourceID: string;
+
+  @IsUUID(4, {message: 'ID do funcionário alvo inválido'})
   id: string;
 
   @IsOptional()
@@ -118,7 +121,8 @@ export class InputUpdateEmployee {
   @IsEnum(EmployeeType, {message: "Tipo de funcionário inválido"})
   type: EmployeeType;
 
-  constructor(id: string, name: string, email: string, biography: string, password: string, type: EmployeeType) {
+  constructor(sourceID: string, id: string, name: string, email: string, biography: string, password: string, type: EmployeeType) {
+    this.sourceID = sourceID;
     this.id = id;
     this.name = name;
     this.email = email;

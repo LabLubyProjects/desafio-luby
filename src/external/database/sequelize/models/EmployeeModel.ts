@@ -1,7 +1,5 @@
-import { DataTypes } from "sequelize/types";
+import { DataTypes } from "sequelize";
 import { db } from "../database";
-import ReservationModel from "./ReservationModel";
-import SaleModel from "./SaleModel";
 
 const EmployeeModel = db.define("employee", {
   id: {
@@ -35,8 +33,5 @@ const EmployeeModel = db.define("employee", {
     allowNull: false
   },
 });
-
-EmployeeModel.hasMany(SaleModel, { foreignKey: 'employee_id', as: 'employee_sale' });
-EmployeeModel.hasMany(ReservationModel, { foreignKey: 'employee_id', as: 'employee_reservation' });
 
 export default EmployeeModel;

@@ -1,7 +1,5 @@
-import { DataTypes } from "sequelize/types";
+import { DataTypes } from "sequelize";
 import { db } from "../database";
-import EmployeeModel from "./EmployeeModel";
-import VehicleModel from "./VehicleModel";
 
 const SaleModel = db.define('sale', { 
     id: {
@@ -22,8 +20,5 @@ const SaleModel = db.define('sale', {
       allowNull: false
     }
 });
-
-SaleModel.belongsTo(EmployeeModel, { foreignKey: 'employee_id', as: 'employee_sale' });
-SaleModel.belongsTo(VehicleModel, { foreignKey: 'vehicle_id', as: 'vehicle_sale' });
 
 export default SaleModel;

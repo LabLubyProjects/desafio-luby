@@ -1,7 +1,5 @@
-import { DataTypes } from "sequelize/types"; 
+import { DataTypes } from "sequelize"; 
 import { db } from "../database";
-import ReservationModel from "./ReservationModel";
-import SaleModel from "./SaleModel";
 
 const VehicleModel = db.define('vehicle', {
   id: {
@@ -42,8 +40,5 @@ const VehicleModel = db.define('vehicle', {
     allowNull: false
   },
 });
-
-VehicleModel.hasOne(SaleModel, { foreignKey: 'vehicle_id', as: 'vehicle_sale' });
-VehicleModel.hasOne(ReservationModel, { foreignKey: 'vehicle_id', as: 'vehicle_reservation' });
 
 export default VehicleModel;

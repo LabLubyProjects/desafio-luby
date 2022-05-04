@@ -16,10 +16,10 @@ export default class SaleController extends BaseController{
     employeeRepository: EmployeeRepository,
     saleRepository: SaleRepository
   ): Promise<OutputSale> {
-    const { vehicleID, employeeID, price } = body;
+    const token = headers.authorization.split(" ")[1];
+    const { vehicleID, price } = body;
+    const employeeID = BaseController.decodeIDFromToken(token);
     const input = new InputSell(vehicleID, employeeID, price); 
-
-    this.validateInput(input);
 
     return new SellUseCase(saleRepository, employeeRepository, vehicleRepository).handle(input);
   }
@@ -37,7 +37,7 @@ export default class SaleController extends BaseController{
     const { page, size } = query; 
     const input = new InputGetAllSalesByEmployee(employeeID, page, size);
 
-    await this.validateInput(input);
+    await BaseController.validateInput(input);
 
     return new GetAllSalesByEmployeeID(saleRepository, employeeRepository, vehicleRepository).handle(input);
   }

@@ -7,7 +7,7 @@ import GetEmployeeByIDUseCase from "@src/useCases/employeeRelated/GetEmployeeByI
 import LoginEmployeeUseCase from "@src/useCases/employeeRelated/LoginEmployeeUseCase";
 import UpdateEmployeeUseCase from "@src/useCases/employeeRelated/UpdateEmployeeUseCase";
 import InvalidPasswordError from "../errors/InvalidPasswordError";
-import BaseController from "./BaseController";
+import BaseController, { ResponseID, ResponseJWT } from "./BaseController";
 
 export default class EmployeeController extends BaseController {
   static async login(
@@ -16,18 +16,18 @@ export default class EmployeeController extends BaseController {
     query: any,
     headers: any,
     employeeRepository: EmployeeRepository
-  ): Promise<string> {
+  ): Promise<ResponseJWT> {
     const { email, password } = body;
     const input = new InputLoginEmployee(email, password);
 
-    await this.validateInput(input);
+    await BaseController.validateInput(input);
 
     const user = await (new LoginEmployeeUseCase(employeeRepository).handle(input));
     
-    if(!this.compareHashedPassword(password, user.password))
+    if(!BaseController.compareHashedPassword(password, user.password))
       throw new InvalidPasswordError();
     
-    return this.generateJWT(user.id);  
+    return {jwt: BaseController.generateJWT(user.id)};  
   }
 
   static async createEmployee(
@@ -36,16 +36,16 @@ export default class EmployeeController extends BaseController {
     query: any,
     headers: any,
     employeeRepository: EmployeeRepository
-  ): Promise<string> {
+  ): Promise<ResponseID> {
     const { cpf, name, email, biography, password, type } = body;
     const input = new InputCreateEmployee(cpf, name, email, biography, password, type);
     
-    await this.validateInput(input);
+    await BaseController.validateInput(input);
 
-    const hashedPassword = await this.hashPassword(password);
+    const hashedPassword = await BaseController.hashPassword(password);
     input.password = hashedPassword
     
-    return new CreateEmployeeUseCase(employeeRepository).handle(input);
+    return {id: await (new CreateEmployeeUseCase(employeeRepository).handle(input))};
   }
 
   static async updateEmployee(
@@ -55,14 +55,16 @@ export default class EmployeeController extends BaseController {
     headers: any,
     employeeRepository: EmployeeRepository
   ): Promise<OutputEmployee> {
+    const token = headers.authorization.split(" ")[1];
     const { id } = params;
+    const sourceID = BaseController.decodeIDFromToken(token)
     const { name, email, biography, password, type } = body;
-    const input = new InputUpdateEmployee(id, name, email, biography, password, type);
+    const input = new InputUpdateEmployee(sourceID, id, name, email, biography, password, type);
     
-    await this.validateInput(input);
+    await BaseController.validateInput(input);
 
     if(password) {
-      const hashedPassword = await this.hashPassword(password);
+      const hashedPassword = await BaseController.hashPassword(password);
       input.password = hashedPassword;
     }
       
@@ -77,9 +79,14 @@ export default class EmployeeController extends BaseController {
     employeeRepository: EmployeeRepository
   ): Promise<OutputEmployee[]> { 
     const { page, size } = query;
-    const input = new InputGetAllEmployees(page, size);
+    let input;
 
-    await this.validateInput(input);
+    if(page && size)
+      input = new InputGetAllEmployees(Number.parseInt(page), Number.parseInt(size));
+    else
+      input = new InputGetAllEmployees();  
+    
+    await BaseController.validateInput(input);
 
     return new GetAllEmployeesUseCase(employeeRepository).handle(input);
   }
@@ -94,7 +101,7 @@ export default class EmployeeController extends BaseController {
     const { id } = params;
     const input = new InputGetEmployeeByID(id);
     
-    await this.validateInput(input);
+    await BaseController.validateInput(input);
     
     return new GetEmployeeByIDUseCase(employeeRepository).handle(input);
   }
@@ -108,10 +115,10 @@ export default class EmployeeController extends BaseController {
   ): Promise<void> {
     const token = headers.authorization.split(" ")[1];
     const { id } = params;
-    const sourceID = this.decodeIDFromToken(token)
+    const sourceID = BaseController.decodeIDFromToken(token)
     const input = new InputDeleteEmployee(sourceID, id);
     
-    await this.validateInput(input);
+    await BaseController.validateInput(input);
     
     return new DeleteEmployeeUseCase(employeeRepository).handle(input);
   }

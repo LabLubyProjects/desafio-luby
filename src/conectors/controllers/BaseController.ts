@@ -3,15 +3,26 @@ import { validate } from "class-validator";
 import GenericClassValidatorError from "../errors/GenericClassValidatorError";
 import { hash, genSalt, compare } from "bcrypt";
 import * as jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
-interface DecodedJWT {
+dotenv.config();
+
+export interface DecodedJWT {
   id: string
+}
+
+export interface ResponseJWT {
+  jwt: string;
+}
+
+export interface ResponseID {
+  id: string;
 }
 
 export default class BaseController {
   static async validateInput(input: GenericInputClass): Promise<void> {
     const errors = await validate(input);
-
+    
     if(errors.length !== 0 && errors[0].constraints !== undefined) {
       const constraint = Object.keys(errors[0].constraints)[0];
       throw new GenericClassValidatorError(errors[0].constraints[constraint])

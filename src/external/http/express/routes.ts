@@ -45,6 +45,15 @@ router.post(
   )
 );
 
+router.post(
+  '/login/employees',
+  ExpressAdapter.create(
+    EmployeeController.login,
+    200,
+    repos.employees
+  )
+);
+
 router.delete(
   '/employees/:id',
   authChecker,
@@ -87,6 +96,7 @@ router.get(
 
 router.post(
   '/vehicles',
+  authChecker,
   ExpressAdapter.create(
     VehicleController.createVehicle,
     201,

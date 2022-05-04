@@ -13,9 +13,9 @@ export interface Vehicle {
 }
 
 export enum VehicleStatus {
-  AVAILABLE,
-  BOOKED,
-  SOLD
+  AVAILABLE = 1,
+  BOOKED = 2,
+  SOLD = 3 
 }
 
 export default class VehicleImpl implements Vehicle {

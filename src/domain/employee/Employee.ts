@@ -12,8 +12,8 @@ export interface Employee {
 }
 
 export enum EmployeeType {
-  ADMIN,
-  SELLER
+  ADMIN = 1,
+  SELLER = 2
 }
 
 export default class EmployeeImpl implements Employee {

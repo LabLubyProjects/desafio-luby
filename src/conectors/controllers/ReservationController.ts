@@ -18,10 +18,10 @@ export default class ReservationController extends BaseController{
   ): Promise<OutputReservation> {
     const token = headers.authorization.split(" ")[1];
     const { vehicleID, price } = body;
-    const employeeID = this.decodeIDFromToken(token);
+    const employeeID = BaseController.decodeIDFromToken(token);
     const input = new InputReserve(vehicleID, employeeID, price); 
 
-    await this.validateInput(input);
+    await BaseController.validateInput(input);
 
     return new ReserveUseCase(reservationRepository, employeeRepository, vehicleRepository).handle(input);
   }
@@ -39,7 +39,7 @@ export default class ReservationController extends BaseController{
     const { page, size } = query; 
     const input = new InputGetAllReservationsByEmployee(employeeID, page, size);
 
-    await this.validateInput(input);
+    await BaseController.validateInput(input);
 
     return new GetAllReservationsByEmployeeID(reservationRepository, employeeRepository, vehicleRepository).handle(input);
   }

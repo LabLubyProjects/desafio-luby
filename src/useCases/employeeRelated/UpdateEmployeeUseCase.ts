@@ -1,3 +1,4 @@
+import InsufficientPermissionError from "../errors/InsufficientPermissionError";
 import NotFoundError from "../errors/NotFoundError";
 import { translateEmployeeType } from "../util/enumTranslators";
 import BaseEmployeeRelatedUseCase from "./BaseEmployeeRelatedUseCase";
@@ -8,6 +9,10 @@ export default class UpdateEmployeeUseCase extends BaseEmployeeRelatedUseCase {
     const employee = await this.employeeRepository.getByID(inputUpdateEmployee.id);
     if(!employee) throw new NotFoundError();
 
+    const sourceEmployee = await this.employeeRepository.getByID(inputUpdateEmployee.sourceID);
+    if(!sourceEmployee) throw new NotFoundError();
+    if(employee.id !== sourceEmployee.id &&  !sourceEmployee.isAdmin()) throw new InsufficientPermissionError();
+  
     if(inputUpdateEmployee.name) employee.name = inputUpdateEmployee.name;
     if(inputUpdateEmployee.email) employee.email = inputUpdateEmployee.email;
     if(inputUpdateEmployee.biography) employee.biography = inputUpdateEmployee.biography;

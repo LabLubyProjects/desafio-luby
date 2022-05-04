@@ -19,10 +19,10 @@ export default class VehicleController extends BaseController {
   ): Promise<string> {
     const token = headers.authorization.split(" ")[1];
     const { brand, model, year, km, color, chassi, price } = body;
-    const sourceEmployeeID = this.decodeIDFromToken(token);
+    const sourceEmployeeID = BaseController.decodeIDFromToken(token);
     const input = new InputAcquireNewVehicle(sourceEmployeeID, brand, model, year, km, color, chassi, price); 
     
-    await this.validateInput(input);
+    await BaseController.validateInput(input);
 
     return new AcquireNewVehicleUseCase(vehicleRepository, employeeRepository).handle(input);
   }
@@ -38,7 +38,7 @@ export default class VehicleController extends BaseController {
     const { page, size } = query;
     const input = new InputGetAllVehicles(page, size);
 
-    await this.validateInput(input);
+    await BaseController.validateInput(input);
 
     return new GetAllVehiclesUseCase(vehicleRepository, employeeRepository).handle(input);
   }
@@ -54,7 +54,7 @@ export default class VehicleController extends BaseController {
     const { id } = params;
     const input = new InputGetVehicleByID(id); 
 
-    await this.validateInput(input);
+    await BaseController.validateInput(input);
 
     return new GetVehicleByID(vehicleRepository, employeeRepository).handle(input);
   }
@@ -69,10 +69,10 @@ export default class VehicleController extends BaseController {
   ): Promise<void> {
     const token = headers.authorization.split(" ")[1];
     const { id } = params;
-    const sourceEmployeeID = this.decodeIDFromToken(token);
+    const sourceEmployeeID = BaseController.decodeIDFromToken(token);
     const input = new InputDeleteVehicle(sourceEmployeeID, id); 
 
-    await this.validateInput(input)
+    await BaseController.validateInput(input)
 
     return new DeleteVehicleUseCase(vehicleRepository, employeeRepository).handle(input);
   }
@@ -88,7 +88,7 @@ export default class VehicleController extends BaseController {
     const { status, page, size } = query;
     const input = new InputFilterVehicleByStatus(status, page, size);
 
-    await this.validateInput(input);
+    await BaseController.validateInput(input);
     
     return new FilterVehicleByStatusUseCase(vehicleRepository, employeeRepository).handle(input);
   }

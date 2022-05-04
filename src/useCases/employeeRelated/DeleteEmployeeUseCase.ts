@@ -8,7 +8,7 @@ export default class DeleteEmployeeUseCase extends BaseEmployeeRelatedUseCase {
     const sourceEmployee = await this.employeeRepository.getByID(inputDeleteEmployee.sourceEmployeeID);
     const targetEmployeeID = await this.employeeRepository.getByID(inputDeleteEmployee.targetEmployeeID);
     if(!sourceEmployee || !targetEmployeeID) throw new NotFoundError();
-    if(!sourceEmployee.isAdmin()) throw new InsufficientPermissionError();
+    if(sourceEmployee.id !== targetEmployeeID.id && !sourceEmployee.isAdmin()) throw new InsufficientPermissionError();
 
     await this.employeeRepository.delete(inputDeleteEmployee.targetEmployeeID);
   }
