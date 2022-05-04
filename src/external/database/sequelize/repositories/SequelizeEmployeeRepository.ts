@@ -13,7 +13,9 @@ export default class SequelizeEmployeeRepository implements EmployeeRepository {
     return employees;
   }
   async getByID(id: string): Promise<Employee | null> {
-    const employeeFromDB = await EmployeeModel.findByPk(id);
+    const employeeFromDB = await EmployeeModel.findByPk(id, {
+      include: ['employee_sale', 'employee_reservation']
+    });
     if(!employeeFromDB) return null;
     return new EmployeeImpl(employeeFromDB.getDataValue('cpf'), employeeFromDB.getDataValue('name'), employeeFromDB.getDataValue('email'), employeeFromDB.getDataValue('biography'), employeeFromDB.getDataValue('password'), employeeFromDB.getDataValue('type'), employeeFromDB.getDataValue('id'));
   }

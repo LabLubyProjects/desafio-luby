@@ -14,9 +14,9 @@ export default class ReserveUseCase extends BaseReservationRelatedUseCase {
     if(!vehicle) throw new NotFoundError();
 
     const inputReservation = new ReservationImpl(inputReserve.vehicleID, inputReserve.employeeID, inputReserve.price);
-    const newReservation = await this.reservationRepository.create(inputReservation);
+    await this.reservationRepository.create(inputReservation);
     await this.vehicleRepository.updateStatus(vehicle.id, VehicleStatus.BOOKED);
-    const outputReservation :OutputReservation = { id: newReservation.id, vehicleBrand: vehicle.brand, vehicleModel: vehicle.model, price: inputReservation.price, employeeName: employee.name, date: format(newReservation.date) }; 
+    const outputReservation : OutputReservation = { id: inputReservation.id, vehicleBrand: vehicle.brand, vehicleModel: vehicle.model, price: inputReservation.price, employeeName: employee.name, date: format(inputReservation.date)}; 
     return outputReservation;
   }
 }
