@@ -1,7 +1,5 @@
-import { v4, validate } from "uuid";
+import { v4 } from "uuid";
 import { VehicleStatus } from "../vehicle/Vehicle";
-import { InvalidEmployeeIDError } from "../errors/InvalidEmployeeErrors";
-import { InvalidVehicleIDError, NegativePriceError } from "../errors/InvalidVehicleErrors";
 
 export interface Sale {
   id: string;
@@ -17,10 +15,6 @@ export default class SaleImpl implements Sale {
   date: Date;
   
   constructor(public vehicleID: string, public employeeID: string, public price: number, public vehicleStatus: VehicleStatus, date?: Date, id?: string) {
-    if(!vehicleID || !validate(vehicleID)) throw new InvalidVehicleIDError();
-    if(!employeeID || !validate(employeeID)) throw new InvalidEmployeeIDError();
-    if(price < 0) throw new NegativePriceError();
-  
     id ? this.id = id : this.id = v4();
     date ? this.date = date : this.date = new Date();
   }
