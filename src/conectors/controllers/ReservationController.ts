@@ -4,9 +4,10 @@ import VehicleRepository from "@src/domain/vehicle/VehicleRepository";
 import GetAllReservationsByEmployeeID from "@src/useCases/reservationRelated/GetAllReservationsByEmployeeID";
 import { InputGetAllReservationsByEmployee, InputReserve, OutputReservation } from "@src/useCases/reservationRelated/ReservationIO";
 import ReserveUseCase from "@src/useCases/reservationRelated/ReserveUseCase";
+import BaseController from "./BaseController";
 
-export default class ReservationController {
-  static reserve(
+export default class ReservationController extends BaseController{
+  static async reserve(
     params: any,
     body: any,
     query: any,
@@ -15,11 +16,14 @@ export default class ReservationController {
     reservationRepository: ReservationRepository
   ): Promise<OutputReservation> {
     const { vehicleID, employeeID, price } = body;
-    const input: InputReserve = {vehicleID, employeeID, price}; 
+    const input = new InputReserve(vehicleID, employeeID, price); 
+
+    await this.validateInput(input);
+
     return new ReserveUseCase(reservationRepository, employeeRepository, vehicleRepository).handle(input);
   }
 
-  static getAllReservationsByEmployee(
+  static async getAllReservationsByEmployee(
     params: any,
     body: any,
     query: any,
@@ -28,7 +32,11 @@ export default class ReservationController {
     reservationRepository: ReservationRepository
   ): Promise<OutputReservation[]> {
     const { employeeID } = params;
-    const input: InputGetAllReservationsByEmployee = {employeeID};
+    const { page, size } = query; 
+    const input = new InputGetAllReservationsByEmployee(employeeID, page, size);
+
+    await this.validateInput(input);
+
     return new GetAllReservationsByEmployeeID(reservationRepository, employeeRepository, vehicleRepository).handle(input);
   }
 }

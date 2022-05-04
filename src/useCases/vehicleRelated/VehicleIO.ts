@@ -1,5 +1,5 @@
 import { VehicleStatus } from "@src/domain/vehicle/Vehicle";
-import { IsEnum, IsInt, IsNumber, IsUUID, Min, MinLength } from "class-validator";
+import { IsEnum, IsInt, IsNumber, IsUUID, Max, Min, MinLength } from "class-validator";
 
 export class InputAcquireNewVehicle {
   @IsUUID(4, { message: 'ID do funcionário inválido' })
@@ -57,8 +57,35 @@ export class InputFilterVehicleByStatus {
   @IsEnum(VehicleStatus, { message: 'Status do veículo inválido' })
   status: VehicleStatus;
 
-  constructor(status: VehicleStatus) {
+  @IsInt({ message: 'O número da página deve ser um inteiro' })
+  @Min(0, { message: 'O número da página não pode ser negativo' })
+  pageNumber: number;
+
+  @IsInt({ message: 'O tamanho da página deve ser um inteiro' })
+  @Min(1, { message: 'O tamanho da página deve ser maior que zero' })
+  @Max(20, { message: 'O tamanho da página deve ser menor que vinte' })
+  pageSize: number;
+
+  constructor(status: VehicleStatus, pageNumber = 0, pageSize = 10) {
     this.status = status;
+    this.pageNumber = pageNumber;
+    this.pageSize = pageSize;
+  }
+}
+
+export class InputGetAllVehicles {
+  @IsInt({ message: 'O número da página deve ser um inteiro' })
+  @Min(0, { message: 'O número da página não pode ser negativo' })
+  pageNumber: number;
+
+  @IsInt({ message: 'O tamanho da página deve ser um inteiro' })
+  @Min(1, { message: 'O tamanho da página deve ser maior que zero' })
+  @Max(20, { message: 'O tamanho da página deve ser menor que vinte' })
+  pageSize: number;
+
+  constructor(pageNumber = 0, pageSize = 10) {
+    this.pageNumber = pageNumber;
+    this.pageSize = pageSize;
   }
 }
 

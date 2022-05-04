@@ -5,7 +5,7 @@ import { InputGetAllSalesByEmployee, OutputSale } from "./SaleIO";
 
 export default class GetAllSalesByEmployeeID extends BaseSaleRelatedUseCase {
   async handle(inputGetAllSalesByEmployee: InputGetAllSalesByEmployee): Promise<OutputSale[]> {
-    const sales = await this.saleRepository.getByEmployeeID(inputGetAllSalesByEmployee.employeeID);
+    const sales = await this.saleRepository.getByEmployeeID(inputGetAllSalesByEmployee.employeeID, inputGetAllSalesByEmployee.pageNumber, inputGetAllSalesByEmployee.pageSize);
     const employee = await this.employeeRepository.getByID(inputGetAllSalesByEmployee.employeeID);
     const outputSales: OutputSale[] = await Promise.all(sales.map(async(sale) => {
       const vehicle = await this.vehicleRepository.getByID(sale.vehicleID);

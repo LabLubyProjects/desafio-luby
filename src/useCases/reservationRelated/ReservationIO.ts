@@ -1,4 +1,4 @@
-import { IsNumber, IsUUID, Min } from 'class-validator';
+import { IsInt, IsNumber, IsUUID, Max, Min } from 'class-validator';
 
 export class InputReserve {
   @IsUUID(4, {message: 'ID do veículo inválido'})
@@ -21,9 +21,20 @@ export class InputReserve {
 export class InputGetAllReservationsByEmployee {
   @IsUUID(4, {message: 'ID do funcionário inválido'})
   employeeID: string;
+  
+  @IsInt({ message: 'O número da página deve ser um inteiro' })
+  @Min(0, { message: 'O número da página não pode ser negativo' })
+  pageNumber: number;
 
-  constructor(employeeID: string) {
+  @IsInt({ message: 'O tamanho da página deve ser um inteiro' })
+  @Min(1, { message: 'O tamanho da página deve ser maior que zero' })
+  @Max(20, { message: 'O tamanho da página deve ser menor que vinte' })
+  pageSize: number;
+
+  constructor(employeeID: string, pageNumber = 0, pageSize = 10) {
     this.employeeID = employeeID;
+    this.pageNumber = pageNumber;
+    this.pageSize = pageSize;
   }
 }
 

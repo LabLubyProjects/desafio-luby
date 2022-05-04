@@ -3,15 +3,22 @@ import VehicleRepository from "@src/domain/vehicle/VehicleRepository";
 import VehicleModel from "../models/VehicleModel";
 
 export default class SequelizeVehicleRepository implements VehicleRepository {
-  async getAll(): Promise<Vehicle[]> {
-    const vehiclesFromDB = await VehicleModel.findAll();
+  async getAll(pageNumber: number, pageSize: number): Promise<Vehicle[]> {
+    const vehiclesFromDB = await VehicleModel.findAll({
+      limit: pageSize,
+      offset: pageNumber * pageSize
+    });
     const vehicles = vehiclesFromDB.map(vehicle => (new VehicleImpl(vehicle.getDataValue('brand'), vehicle.getDataValue('model'), vehicle.getDataValue('year'), vehicle.getDataValue('km'), vehicle.getDataValue('color'), vehicle.getDataValue('chassi'), vehicle.getDataValue('price'), vehicle.getDataValue('status'),vehicle.getDataValue('id'))));
     return vehicles;
   }
-  async getByStatus(status: VehicleStatus): Promise<Vehicle[]> {
-    const vehiclesFromDB = await VehicleModel.findAll({ where: {
-      status: status
-    } });
+  async getByStatus(status: VehicleStatus, pageNumber: number, pageSize: number): Promise<Vehicle[]> {
+    const vehiclesFromDB = await VehicleModel.findAll({
+      limit: pageSize,
+      offset: pageNumber * pageSize,
+      where: {
+        status: status
+      }
+    });
     const vehicles = vehiclesFromDB.map(vehicle => (new VehicleImpl(vehicle.getDataValue('brand'), vehicle.getDataValue('model'), vehicle.getDataValue('year'), vehicle.getDataValue('km'), vehicle.getDataValue('color'), vehicle.getDataValue('chassi'), vehicle.getDataValue('price'), vehicle.getDataValue('status'),vehicle.getDataValue('id'))));
     return vehicles;
   }

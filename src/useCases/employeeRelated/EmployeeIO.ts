@@ -1,6 +1,6 @@
 import { EmployeeType } from "@src/domain/employee/Employee";
 import { IsCPF } from "brazilian-class-validator";
-import { IsEmail, IsEnum, IsUUID, MinLength } from "class-validator";
+import { IsEmail, IsEnum, IsInt, IsUUID, Max, Min, MinLength } from "class-validator";
 
 export class InputCreateEmployee {
   @IsCPF({message: 'CPF inválido'})
@@ -58,5 +58,21 @@ export class InputDeleteEmployee {
   constructor(targetEmployeeID: string, sourceEmployeeID: string) {
     this.targetEmployeeID = targetEmployeeID;
     this.sourceEmployeeID = sourceEmployeeID;
+  }
+}
+
+export class InputGetAllEmployees {
+  @IsInt({ message: 'O número da página deve ser um inteiro' })
+  @Min(0, { message: 'O número da página não pode ser negativo' })
+  pageNumber: number;
+
+  @IsInt({ message: 'O tamanho da página deve ser um inteiro' })
+  @Min(1, { message: 'O tamanho da página deve ser maior que zero' })
+  @Max(20, { message: 'O tamanho da página deve ser menor que vinte' })
+  pageSize: number;
+
+  constructor(pageNumber = 0, pageSize = 10) {
+    this.pageNumber = pageNumber;
+    this.pageSize = pageSize;
   }
 }

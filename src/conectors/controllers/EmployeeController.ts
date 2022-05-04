@@ -1,50 +1,65 @@
 import EmployeeRepository from "@src/domain/employee/EmployeeRepository";
 import CreateEmployeeUseCase from "@src/useCases/employeeRelated/CreateEmployeeUseCase";
 import DeleteEmployeeUseCase from "@src/useCases/employeeRelated/DeleteEmployeeUseCase";
-import { InputCreateEmployee, InputDeleteEmployee, InputGetEmployeeByID, OutputEmployee } from "@src/useCases/employeeRelated/EmployeeIO";
+import { InputCreateEmployee, InputDeleteEmployee, InputGetAllEmployees, InputGetEmployeeByID, OutputEmployee } from "@src/useCases/employeeRelated/EmployeeIO";
 import GetAllEmployeesUseCase from "@src/useCases/employeeRelated/GetAllEmployeesUseCase";
 import GetEmployeeByIDUseCase from "@src/useCases/employeeRelated/GetEmployeeByIDUseCase";
+import BaseController from "./BaseController";
 
-export default class EmployeeController {
-  static createEmployee(
+export default class EmployeeController extends BaseController {
+  static async createEmployee(
     params: any,
     body: any,
     query: any,
     employeeRepository: EmployeeRepository
   ): Promise<string> {
     const { cpf, name, email, biography, password, type } = body;
-    const input: InputCreateEmployee = {cpf, name, email, biography, password, type}; 
+    const input = new InputCreateEmployee(cpf, name, email, biography, password, type);
+    
+    await this.validateInput(input);
+    
     return new CreateEmployeeUseCase(employeeRepository).handle(input);
   }
 
-  static getAllEmployees(
+  static async getAllEmployees(
     params: any,
     body: any,
     query: any,
     employeeRepository: EmployeeRepository
   ): Promise<OutputEmployee[]> { 
-    return new GetAllEmployeesUseCase(employeeRepository).handle();
+    const { page, size } = query;
+    const input = new InputGetAllEmployees(page, size);
+
+    await this.validateInput(input);
+
+    return new GetAllEmployeesUseCase(employeeRepository).handle(input);
   }
 
-  static getEmployeesByID(
+  static async getEmployeesByID(
     params: any,
     body: any,
     query: any,
     employeeRepository: EmployeeRepository
   ): Promise<OutputEmployee> {
     const { id } = params;
-    const input: InputGetEmployeeByID = {id}; 
+    const input = new InputGetEmployeeByID(id);
+    
+    await this.validateInput(input);
+    
     return new GetEmployeeByIDUseCase(employeeRepository).handle(input);
   }
 
-  static deleteEmployee(
+  static async deleteEmployee(
     params: any,
     body: any,
     query: any,
     employeeRepository: EmployeeRepository
   ): Promise<void> {
     const { sourceID, targetID } = params;
-    const input: InputDeleteEmployee = {sourceEmployeeID: sourceID, targetEmployeeID: targetID}; 
+    const input = new InputDeleteEmployee(sourceID, targetID);
+    
+    await this.validateInput(input);
+    
     return new DeleteEmployeeUseCase(employeeRepository).handle(input);
   }
 }

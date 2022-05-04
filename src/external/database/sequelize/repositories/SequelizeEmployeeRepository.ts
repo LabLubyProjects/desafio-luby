@@ -4,8 +4,11 @@ import EmployeeModel from "../models/EmployeeModel";
 
 export default class SequelizeEmployeeRepository implements EmployeeRepository {
 
-  async getAll(): Promise<Employee[]> {
-    const employeesFromDB = await EmployeeModel.findAll();
+  async getAll(pageNumber: number, pageSize: number): Promise<Employee[]> {
+    const employeesFromDB = await EmployeeModel.findAll({
+      limit: pageSize,
+      offset: pageNumber * pageSize
+    });
     const employees = employeesFromDB.map(employee => (new EmployeeImpl(employee.getDataValue('cpf'), employee.getDataValue('name'), employee.getDataValue('email'), employee.getDataValue('biography'), employee.getDataValue('password'), employee.getDataValue('type'), employee.getDataValue('id'))));
     return employees;
   }

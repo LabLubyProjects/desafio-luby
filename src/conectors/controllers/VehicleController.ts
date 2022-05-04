@@ -5,10 +5,11 @@ import DeleteVehicleUseCase from "@src/useCases/vehicleRelated/DeleteVehicleUseC
 import FilterVehicleByStatusUseCase from "@src/useCases/vehicleRelated/FilterVehicleByStatusUseCase";
 import GetAllVehiclesUseCase from "@src/useCases/vehicleRelated/GetAllVehiclesUseCase";
 import GetVehicleByID from "@src/useCases/vehicleRelated/GetVehicleByIDUseCase";
-import { InputAcquireNewVehicle, InputDeleteVehicle, InputFilterVehicleByStatus, InputGetVehicleByID, OutputVehicle } from "@src/useCases/vehicleRelated/VehicleIO";
+import { InputAcquireNewVehicle, InputDeleteVehicle, InputFilterVehicleByStatus, InputGetAllVehicles, InputGetVehicleByID, OutputVehicle } from "@src/useCases/vehicleRelated/VehicleIO";
+import BaseController from "./BaseController";
 
-export default class VehicleController {
-  static createVehicle(
+export default class VehicleController extends BaseController {
+  static async createVehicle(
     params: any,
     body: any,
     query: any,
@@ -16,21 +17,29 @@ export default class VehicleController {
     employeeRepository: EmployeeRepository
   ): Promise<string> {
     const { sourceEmployeeID, brand, model, year, km, color, chassi, price } = body;
-    const input: InputAcquireNewVehicle = {sourceEmployeeID, brand, model, year, km, color, chassi, price}; 
+    const input = new InputAcquireNewVehicle(sourceEmployeeID, brand, model, year, km, color, chassi, price); 
+    
+    await this.validateInput(input);
+
     return new AcquireNewVehicleUseCase(vehicleRepository, employeeRepository).handle(input);
   }
 
-  static getAllVehicles(
+  static async getAllVehicles(
     params: any,
     body: any,
     query: any,
     vehicleRepository: VehicleRepository,
     employeeRepository: EmployeeRepository
   ): Promise<OutputVehicle[]> {
-    return new GetAllVehiclesUseCase(vehicleRepository, employeeRepository).handle();
+    const { page, size } = query;
+    const input = new InputGetAllVehicles(page, size);
+
+    await this.validateInput(input);
+
+    return new GetAllVehiclesUseCase(vehicleRepository, employeeRepository).handle(input);
   }
 
-  static getVehiclesByID(
+  static async getVehiclesByID(
     params: any,
     body: any,
     query: any,
@@ -38,11 +47,14 @@ export default class VehicleController {
     employeeRepository: EmployeeRepository
   ): Promise<OutputVehicle> {
     const { id } = params;
-    const input: InputGetVehicleByID = {id}; 
+    const input = new InputGetVehicleByID(id); 
+
+    await this.validateInput(input);
+
     return new GetVehicleByID(vehicleRepository, employeeRepository).handle(input);
   }
 
-  static deleteVehicle(
+  static async deleteVehicle(
     params: any,
     body: any,
     query: any,
@@ -50,19 +62,25 @@ export default class VehicleController {
     employeeRepository: EmployeeRepository
   ): Promise<void> {
     const { sourceEmployeeID, vehicleID } = params;
-    const input: InputDeleteVehicle = {sourceEmployeeID, targetVehicleID: vehicleID}; 
+    const input = new InputDeleteVehicle(sourceEmployeeID, vehicleID); 
+
+    await this.validateInput(input)
+
     return new DeleteVehicleUseCase(vehicleRepository, employeeRepository).handle(input);
   }
 
-  static filterByStatus(
+  static async filterByStatus(
     params: any,
     body: any,
     query: any,
     vehicleRepository: VehicleRepository,
     employeeRepository: EmployeeRepository
   ): Promise<OutputVehicle[]> {
-    const { status } = query;
-    const input: InputFilterVehicleByStatus = { status };
+    const { status, page, size } = query;
+    const input = new InputFilterVehicleByStatus(status, page, size);
+
+    await this.validateInput(input);
+    
     return new FilterVehicleByStatusUseCase(vehicleRepository, employeeRepository).handle(input);
   }
 }
