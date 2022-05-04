@@ -1,5 +1,4 @@
 const dbConfig = {
-  dialect: 'postgres',
   host: 'localhost',
   username: 'postgres',
   password: 'desafioluby',

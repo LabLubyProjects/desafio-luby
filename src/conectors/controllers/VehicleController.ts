@@ -14,7 +14,7 @@ export default class VehicleController {
     query: any,
     vehicleRepository: VehicleRepository,
     employeeRepository: EmployeeRepository
-  ): Promise<OutputVehicle> {
+  ): Promise<string> {
     const { sourceEmployeeID, brand, model, year, km, color, chassi, price } = body;
     const input: InputAcquireNewVehicle = {sourceEmployeeID, brand, model, year, km, color, chassi, price}; 
     return new AcquireNewVehicleUseCase(vehicleRepository, employeeRepository).handle(input);

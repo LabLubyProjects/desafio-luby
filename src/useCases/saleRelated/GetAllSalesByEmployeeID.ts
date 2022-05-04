@@ -9,7 +9,7 @@ export default class GetAllSalesByEmployeeID extends BaseSaleRelatedUseCase {
     const employee = await this.employeeRepository.getByID(inputGetAllSalesByEmployee.employeeID);
     const outputSales: OutputSale[] = await Promise.all(sales.map(async(sale) => {
       const vehicle = await this.vehicleRepository.getByID(sale.vehicleID);
-      return {id: sale.id, vehicleBrand: vehicle.brand, vehicleModel: vehicle.model, vehicleStatus: translateVehicleStatus(vehicle.status), price: sale.price, employeeName: employee.name, date: format(sale.date)}
+      return {id: sale.id, vehicleBrand: vehicle!.brand, vehicleModel: vehicle!.model, vehicleStatus: translateVehicleStatus(vehicle!.status), price: sale.price, employeeName: employee!.name, date: format(sale.date)}
     }));
 
     return outputSales;

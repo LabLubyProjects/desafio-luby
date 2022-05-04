@@ -11,7 +11,7 @@ export default class EmployeeController {
     body: any,
     query: any,
     employeeRepository: EmployeeRepository
-  ): Promise<OutputEmployee> {
+  ): Promise<string> {
     const { cpf, name, email, biography, password, type } = body;
     const input: InputCreateEmployee = {cpf, name, email, biography, password, type}; 
     return new CreateEmployeeUseCase(employeeRepository).handle(input);
