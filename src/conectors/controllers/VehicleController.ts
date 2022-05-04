@@ -68,9 +68,9 @@ export default class VehicleController extends BaseController {
     employeeRepository: EmployeeRepository
   ): Promise<void> {
     const token = headers.authorization.split(" ")[1];
-    const { vehicleID } = params;
+    const { id } = params;
     const sourceEmployeeID = this.decodeIDFromToken(token);
-    const input = new InputDeleteVehicle(sourceEmployeeID, vehicleID); 
+    const input = new InputDeleteVehicle(sourceEmployeeID, id); 
 
     await this.validateInput(input)
 

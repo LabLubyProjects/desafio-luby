@@ -107,9 +107,9 @@ export default class EmployeeController extends BaseController {
     employeeRepository: EmployeeRepository
   ): Promise<void> {
     const token = headers.authorization.split(" ")[1];
-    const { targetID } = params;
+    const { id } = params;
     const sourceID = this.decodeIDFromToken(token)
-    const input = new InputDeleteEmployee(sourceID, targetID);
+    const input = new InputDeleteEmployee(sourceID, id);
     
     await this.validateInput(input);
     
