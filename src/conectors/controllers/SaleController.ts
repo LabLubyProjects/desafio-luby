@@ -35,7 +35,13 @@ export default class SaleController extends BaseController{
   ): Promise<OutputSale[]> {
     const { employeeID } = params;
     const { page, size } = query; 
-    const input = new InputGetAllSalesByEmployee(employeeID, page, size);
+
+    let input;
+
+    if(page && size)
+      input = new InputGetAllSalesByEmployee(employeeID, Number.parseInt(page), Number.parseInt(size));
+    else
+      input = new InputGetAllSalesByEmployee(employeeID);  
 
     await BaseController.validateInput(input);
 

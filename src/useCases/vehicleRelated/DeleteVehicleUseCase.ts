@@ -10,6 +10,6 @@ export default class DeleteVehicleUseCase extends BaseVehicleRelatedUseCase {
     if(!sourceEmployee || !targetVehicle) throw new NotFoundError();
     if(!sourceEmployee.isAdmin()) throw new InsufficientPermissionError();
 
-    await this.employeeRepository.delete(inputDeleteVehicle.targetVehicleID);
+    await this.vehicleRepository.delete(inputDeleteVehicle.targetVehicleID);
   }
 }

@@ -37,7 +37,12 @@ export default class ReservationController extends BaseController{
   ): Promise<OutputReservation[]> {
     const { employeeID } = params;
     const { page, size } = query; 
-    const input = new InputGetAllReservationsByEmployee(employeeID, page, size);
+    let input;
+
+    if(page && size)
+      input = new InputGetAllReservationsByEmployee(employeeID, Number.parseInt(page), Number.parseInt(size));
+    else
+      input = new InputGetAllReservationsByEmployee(employeeID);  
 
     await BaseController.validateInput(input);
 

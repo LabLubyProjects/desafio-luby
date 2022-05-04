@@ -117,7 +117,7 @@ router.delete(
 );
 
 router.get(
-  '/vehicles/:status',
+  '/vehicles/status/:status',
   ExpressAdapter.create(
     VehicleController.filterByStatus,
     200,
