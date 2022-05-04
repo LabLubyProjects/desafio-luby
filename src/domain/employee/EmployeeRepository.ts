@@ -7,4 +7,5 @@ export default interface EmployeeRepository {
   getByEmail(email: string): Promise<Employee | null>;
   create(newEmployee: Employee): Promise<string>;
   delete(id: string): Promise<void>;
+  update(employee: Employee): Promise<Employee>;
 }

@@ -1,10 +1,11 @@
 import EmployeeRepository from "@src/domain/employee/EmployeeRepository";
 import CreateEmployeeUseCase from "@src/useCases/employeeRelated/CreateEmployeeUseCase";
 import DeleteEmployeeUseCase from "@src/useCases/employeeRelated/DeleteEmployeeUseCase";
-import { InputCreateEmployee, InputDeleteEmployee, InputGetAllEmployees, InputGetEmployeeByID, InputLoginEmployee, OutputEmployee } from "@src/useCases/employeeRelated/EmployeeIO";
+import { InputCreateEmployee, InputDeleteEmployee, InputGetAllEmployees, InputGetEmployeeByID, InputLoginEmployee, InputUpdateEmployee, OutputEmployee } from "@src/useCases/employeeRelated/EmployeeIO";
 import GetAllEmployeesUseCase from "@src/useCases/employeeRelated/GetAllEmployeesUseCase";
 import GetEmployeeByIDUseCase from "@src/useCases/employeeRelated/GetEmployeeByIDUseCase";
 import LoginEmployeeUseCase from "@src/useCases/employeeRelated/LoginEmployeeUseCase";
+import UpdateEmployeeUseCase from "@src/useCases/employeeRelated/UpdateEmployeeUseCase";
 import InvalidPasswordError from "../errors/InvalidPasswordError";
 import BaseController from "./BaseController";
 
@@ -45,6 +46,27 @@ export default class EmployeeController extends BaseController {
     input.password = hashedPassword
     
     return new CreateEmployeeUseCase(employeeRepository).handle(input);
+  }
+
+  static async updateEmployee(
+    params: any,
+    body: any,
+    query: any,
+    headers: any,
+    employeeRepository: EmployeeRepository
+  ): Promise<OutputEmployee> {
+    const { id } = params;
+    const { name, email, biography, password, type } = body;
+    const input = new InputUpdateEmployee(id, name, email, biography, password, type);
+    
+    await this.validateInput(input);
+
+    if(password) {
+      const hashedPassword = await this.hashPassword(password);
+      input.password = hashedPassword;
+    }
+      
+    return new UpdateEmployeeUseCase(employeeRepository).handle(input);
   }
 
   static async getAllEmployees(

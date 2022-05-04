@@ -1,6 +1,6 @@
 import { EmployeeType } from "@src/domain/employee/Employee";
 import { IsCPF } from "brazilian-class-validator";
-import { IsEmail, IsEnum, IsInt, IsUUID, Max, Min, MinLength } from "class-validator";
+import { IsEmail, IsEnum, IsInt, IsOptional, IsUUID, Max, Min, MinLength } from "class-validator";
 
 export class InputCreateEmployee {
   @IsCPF({message: 'CPF inválido'})
@@ -94,4 +94,36 @@ export interface OutputLoginEmployee {
   id: string;
   email: string;
   password: string;
+}
+
+export class InputUpdateEmployee {
+  @IsUUID(4, {message: 'ID do funcionário inválido'})
+  id: string;
+
+  @IsOptional()
+  @MinLength(1, { message: 'Informe um nome'})
+  name: string;
+
+  @IsOptional()
+  @IsEmail(undefined, {message: 'Novo email inválido'})
+  email: string;
+
+  biography: string;
+
+  @IsOptional()
+  @MinLength(6, { message: 'Informe um uma senha com o mínimo de 6 caracteres'})
+  password: string;
+
+  @IsOptional()
+  @IsEnum(EmployeeType, {message: "Tipo de funcionário inválido"})
+  type: EmployeeType;
+
+  constructor(id: string, name: string, email: string, biography: string, password: string, type: EmployeeType) {
+    this.id = id;
+    this.name = name;
+    this.email = email;
+    this.biography = biography;
+    this.password = password;
+    this.type = type;
+  }
 }

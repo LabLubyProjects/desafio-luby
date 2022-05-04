@@ -12,6 +12,15 @@ export default class SequelizeEmployeeRepository implements EmployeeRepository {
     const employees = employeesFromDB.map(employee => (new EmployeeImpl(employee.getDataValue('cpf'), employee.getDataValue('name'), employee.getDataValue('email'), employee.getDataValue('biography'), employee.getDataValue('password'), employee.getDataValue('type'), employee.getDataValue('id'))));
     return employees;
   }
+
+  async update(employee: Employee): Promise<Employee> {
+    const updateValues = { name: employee.name , email: employee.email, biography: employee.biography, password: employee.password, type: employee.type};
+    const employeeFromDB = await EmployeeModel.findByPk(employee.id);
+    employeeFromDB?.update(updateValues);
+    
+    return new EmployeeImpl(employeeFromDB?.getDataValue('cpf'), employeeFromDB?.getDataValue('name'), employeeFromDB?.getDataValue('email'), employeeFromDB?.getDataValue('biography'), employeeFromDB?.getDataValue('password'), employeeFromDB?.getDataValue('type'), employeeFromDB?.getDataValue('id'));
+  }
+
   async getByID(id: string): Promise<Employee | null> {
     const employeeFromDB = await EmployeeModel.findByPk(id, {
       include: ['employee_sale', 'employee_reservation']
