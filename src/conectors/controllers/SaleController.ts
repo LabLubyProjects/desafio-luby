@@ -11,6 +11,7 @@ export default class SaleController extends BaseController{
     params: any,
     body: any,
     query: any,
+    headers: any,
     vehicleRepository: VehicleRepository,
     employeeRepository: EmployeeRepository,
     saleRepository: SaleRepository
@@ -27,6 +28,7 @@ export default class SaleController extends BaseController{
     params: any,
     body: any,
     query: any,
+    headers: any,
     vehicleRepository: VehicleRepository,
     employeeRepository: EmployeeRepository,
     saleRepository: SaleRepository

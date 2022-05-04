@@ -13,10 +13,13 @@ export default class VehicleController extends BaseController {
     params: any,
     body: any,
     query: any,
+    headers: any,
     vehicleRepository: VehicleRepository,
     employeeRepository: EmployeeRepository
   ): Promise<string> {
-    const { sourceEmployeeID, brand, model, year, km, color, chassi, price } = body;
+    const token = headers.authorization.split(" ")[1];
+    const { brand, model, year, km, color, chassi, price } = body;
+    const sourceEmployeeID = this.decodeIDFromToken(token);
     const input = new InputAcquireNewVehicle(sourceEmployeeID, brand, model, year, km, color, chassi, price); 
     
     await this.validateInput(input);
@@ -28,6 +31,7 @@ export default class VehicleController extends BaseController {
     params: any,
     body: any,
     query: any,
+    headers: any,
     vehicleRepository: VehicleRepository,
     employeeRepository: EmployeeRepository
   ): Promise<OutputVehicle[]> {
@@ -43,6 +47,7 @@ export default class VehicleController extends BaseController {
     params: any,
     body: any,
     query: any,
+    headers: any,
     vehicleRepository: VehicleRepository,
     employeeRepository: EmployeeRepository
   ): Promise<OutputVehicle> {
@@ -58,10 +63,13 @@ export default class VehicleController extends BaseController {
     params: any,
     body: any,
     query: any,
+    headers: any,
     vehicleRepository: VehicleRepository,
     employeeRepository: EmployeeRepository
   ): Promise<void> {
-    const { sourceEmployeeID, vehicleID } = params;
+    const token = headers.authorization.split(" ")[1];
+    const { vehicleID } = params;
+    const sourceEmployeeID = this.decodeIDFromToken(token);
     const input = new InputDeleteVehicle(sourceEmployeeID, vehicleID); 
 
     await this.validateInput(input)
@@ -73,6 +81,7 @@ export default class VehicleController extends BaseController {
     params: any,
     body: any,
     query: any,
+    headers: any,
     vehicleRepository: VehicleRepository,
     employeeRepository: EmployeeRepository
   ): Promise<OutputVehicle[]> {

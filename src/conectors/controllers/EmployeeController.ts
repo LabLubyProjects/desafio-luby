@@ -13,6 +13,7 @@ export default class EmployeeController extends BaseController {
     params: any,
     body: any,
     query: any,
+    headers: any,
     employeeRepository: EmployeeRepository
   ): Promise<string> {
     const { email, password } = body;
@@ -32,6 +33,7 @@ export default class EmployeeController extends BaseController {
     params: any,
     body: any,
     query: any,
+    headers: any,
     employeeRepository: EmployeeRepository
   ): Promise<string> {
     const { cpf, name, email, biography, password, type } = body;
@@ -49,6 +51,7 @@ export default class EmployeeController extends BaseController {
     params: any,
     body: any,
     query: any,
+    headers: any,
     employeeRepository: EmployeeRepository
   ): Promise<OutputEmployee[]> { 
     const { page, size } = query;
@@ -63,6 +66,7 @@ export default class EmployeeController extends BaseController {
     params: any,
     body: any,
     query: any,
+    headers: any,
     employeeRepository: EmployeeRepository
   ): Promise<OutputEmployee> {
     const { id } = params;
@@ -77,9 +81,12 @@ export default class EmployeeController extends BaseController {
     params: any,
     body: any,
     query: any,
+    headers: any,
     employeeRepository: EmployeeRepository
   ): Promise<void> {
-    const { sourceID, targetID } = params;
+    const token = headers.authorization.split(" ")[1];
+    const { targetID } = params;
+    const sourceID = this.decodeIDFromToken(token)
     const input = new InputDeleteEmployee(sourceID, targetID);
     
     await this.validateInput(input);

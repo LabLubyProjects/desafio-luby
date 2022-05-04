@@ -11,11 +11,14 @@ export default class ReservationController extends BaseController{
     params: any,
     body: any,
     query: any,
+    headers: any,
     vehicleRepository: VehicleRepository,
     employeeRepository: EmployeeRepository,
     reservationRepository: ReservationRepository
   ): Promise<OutputReservation> {
-    const { vehicleID, employeeID, price } = body;
+    const token = headers.authorization.split(" ")[1];
+    const { vehicleID, price } = body;
+    const employeeID = this.decodeIDFromToken(token);
     const input = new InputReserve(vehicleID, employeeID, price); 
 
     await this.validateInput(input);
@@ -27,6 +30,7 @@ export default class ReservationController extends BaseController{
     params: any,
     body: any,
     query: any,
+    headers: any,
     vehicleRepository: VehicleRepository,
     employeeRepository: EmployeeRepository,
     reservationRepository: ReservationRepository

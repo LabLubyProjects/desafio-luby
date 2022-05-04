@@ -4,6 +4,10 @@ import GenericClassValidatorError from "../errors/GenericClassValidatorError";
 import { hash, genSalt, compare } from "bcrypt";
 import * as jwt from "jsonwebtoken";
 
+interface DecodedJWT {
+  id: string
+}
+
 export default class BaseController {
   static async validateInput(input: GenericInputClass): Promise<void> {
     const errors = await validate(input);
@@ -29,5 +33,10 @@ export default class BaseController {
     const secret = process.env.SECRET as string;
     const token = jwt.sign({ id: idToBeIncluded }, secret)
     return token;
+  }
+
+  static decodeIDFromToken(token: string): string {
+    const decoded = jwt.decode(token) as DecodedJWT;
+    return decoded.id;
   }
 }
