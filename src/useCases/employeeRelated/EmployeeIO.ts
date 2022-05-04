@@ -76,3 +76,22 @@ export class InputGetAllEmployees {
     this.pageSize = pageSize;
   }
 }
+
+export class InputLoginEmployee {
+  @IsEmail(undefined, {message: 'Email inválido'})
+  email: string;
+
+  @MinLength(1, { message: 'Informe a senha'})
+  password: string;
+
+  constructor(email: string, password: string) {
+    this.email = email;
+    this.password = password;
+  }
+}
+
+export interface OutputLoginEmployee {
+  id: string;
+  email: string;
+  password: string;
+}

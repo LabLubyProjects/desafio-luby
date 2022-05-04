@@ -11,7 +11,10 @@ export default class ExpressAdapter {
       try {
         if (fn instanceof Function) {
           const obj = await fn(req.params, req.body, req.query, repositories);
-          res.status(expectedStatusCode).json(obj);
+          if(obj)
+            res.status(expectedStatusCode).json(obj);
+          else
+            res.status(expectedStatusCode);
         }
       } catch (error) {
         next(error);

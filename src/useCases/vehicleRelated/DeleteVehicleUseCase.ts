@@ -1,5 +1,5 @@
 import NotFoundError from "../errors/NotFoundError";
-import UnauthorizedError from "../errors/UnauthorizedError";
+import InsufficientPermissionError from "../errors/InsufficientPermissionError";
 import BaseVehicleRelatedUseCase from "./BaseVehicleRelatedUseCase";
 import { InputDeleteVehicle } from "./VehicleIO";
 
@@ -8,7 +8,7 @@ export default class DeleteVehicleUseCase extends BaseVehicleRelatedUseCase {
     const sourceEmployee = await this.employeeRepository.getByID(inputDeleteVehicle.sourceEmployeeID);
     const targetVehicle = await this.vehicleRepository.getByID(inputDeleteVehicle.targetVehicleID);
     if(!sourceEmployee || !targetVehicle) throw new NotFoundError();
-    if(!sourceEmployee.isAdmin()) throw new UnauthorizedError();
+    if(!sourceEmployee.isAdmin()) throw new InsufficientPermissionError();
 
     await this.employeeRepository.delete(inputDeleteVehicle.targetVehicleID);
   }
