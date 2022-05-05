@@ -4,8 +4,8 @@
   "description": "Desafio de estágio Luby",
   "main": "index.js",
   "scripts": {
-    "start:express": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules 'src/external/http/express/main.ts'",
-    "start:hapi": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules 'src/external/http/hapi/main.ts'",
+    "start:express": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules src/external/http/express/main.ts",
+    "start:hapi": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules src/external/http/hapi/main.ts",
     "start:testelogico": "node TesteRaciocinioLogico.js"
   },
   "author": "Breno Vergilio",

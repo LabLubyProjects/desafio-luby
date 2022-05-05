@@ -3,6 +3,7 @@ const dbConfig = {
   username: 'postgres',
   password: 'desafioluby',
   database: 'desafiolubynode',
+  dialect: 'postgres',
   define: {
     timestamps: true,
     underscored: true,
