@@ -10,14 +10,13 @@ import SequelizeVehicleRepository from '@src/external/database/sequelize/reposit
 import { Router } from 'express';
 import authChecker from './authChecker';
 
-
 const router: Router = Router();
 const repos = {
   employees: new SequelizeEmployeeRepository(),
   vehicles: new SequelizeVehicleRepository(),
   sales: new SequelizeSaleRepository(),
-  reservations: new SequelizeReservationRepository()
-}
+  reservations: new SequelizeReservationRepository(),
+};
 
 router.get(
   '/employees',
@@ -38,40 +37,24 @@ router.get(
 
 router.post(
   '/employees',
-  ExpressAdapter.create(
-    EmployeeController.createEmployee,
-    201,
-    repos.employees
-  )
+  ExpressAdapter.create(EmployeeController.createEmployee, 201, repos.employees)
 );
 
 router.post(
   '/login/employees',
-  ExpressAdapter.create(
-    EmployeeController.login,
-    200,
-    repos.employees
-  )
+  ExpressAdapter.create(EmployeeController.login, 200, repos.employees)
 );
 
 router.delete(
   '/employees/:id',
   authChecker,
-  ExpressAdapter.create(
-    EmployeeController.deleteEmployee,
-    204,
-    repos.employees
-  )
+  ExpressAdapter.create(EmployeeController.deleteEmployee, 204, repos.employees)
 );
 
 router.put(
   '/employees/:id',
   authChecker,
-  ExpressAdapter.create(
-    EmployeeController.updateEmployee,
-    200,
-    repos.employees
-  )
+  ExpressAdapter.create(EmployeeController.updateEmployee, 200, repos.employees)
 );
 
 router.get(
@@ -80,7 +63,7 @@ router.get(
     VehicleController.getAllVehicles,
     200,
     repos.vehicles,
-    repos.employees,
+    repos.employees
   )
 );
 
@@ -169,7 +152,5 @@ router.post(
     repos.vehicles
   )
 );
-
-
 
 export { router };

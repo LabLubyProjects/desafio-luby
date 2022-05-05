@@ -1,19 +1,23 @@
-import InvalidTokenError from "@src/conectors/errors/InvalidTokenError";
-import UnauthorizedError from "@src/conectors/errors/UnauthorizedError";
-import { NextFunction, Request, Response } from "express";
-import * as jwt from "jsonwebtoken";
+import InvalidTokenError from '@src/conectors/errors/InvalidTokenError';
+import UnauthorizedError from '@src/conectors/errors/UnauthorizedError';
+import { NextFunction, Request, Response } from 'express';
+import * as jwt from 'jsonwebtoken';
 
-export default function authChecker(req: Request, res: Response, next: NextFunction): void {
+export default function authChecker(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void {
   const authHeader = req.headers.authorization;
-  const token = authHeader && authHeader.split(" ")[1];
+  const token = authHeader && authHeader.split(' ')[1];
 
-  if(!token) throw new UnauthorizedError();
+  if (!token) throw new UnauthorizedError();
 
   try {
     const secret = process.env.SECRET as string;
     jwt.verify(token, secret);
     next();
-  } catch(error) {
+  } catch (error) {
     throw new InvalidTokenError();
   }
 }

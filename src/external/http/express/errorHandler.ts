@@ -1,12 +1,12 @@
-import GenericClassValidatorError from "@src/conectors/errors/GenericClassValidatorError";
-import InvalidPasswordError from "@src/conectors/errors/InvalidPasswordError";
-import AlreadyExistsError from "@src/useCases/errors/AlreadyExistsError";
-import NotFoundError from "@src/useCases/errors/NotFoundError";
-import InsufficientPermissionError from "@src/useCases/errors/InsufficientPermissionError";
-import { NextFunction, Request, Response } from "express";
-import InvalidTokenError from "@src/conectors/errors/InvalidTokenError";
-import UnauthorizedError from "@src/conectors/errors/UnauthorizedError";
-import UnavailableVehicleError from "@src/useCases/errors/UnavailableVehicleError";
+import GenericClassValidatorError from '@src/conectors/errors/GenericClassValidatorError';
+import InvalidPasswordError from '@src/conectors/errors/InvalidPasswordError';
+import AlreadyExistsError from '@src/useCases/errors/AlreadyExistsError';
+import NotFoundError from '@src/useCases/errors/NotFoundError';
+import InsufficientPermissionError from '@src/useCases/errors/InsufficientPermissionError';
+import { NextFunction, Request, Response } from 'express';
+import InvalidTokenError from '@src/conectors/errors/InvalidTokenError';
+import UnauthorizedError from '@src/conectors/errors/UnauthorizedError';
+import UnavailableVehicleError from '@src/useCases/errors/UnavailableVehicleError';
 
 export default function errorHandler(
   error: Error,
@@ -30,13 +30,13 @@ export default function errorHandler(
     return res.status(404).json({ statusCode: 404, message: error.message });
 
   if (error instanceof AlreadyExistsError)
-    return res.status(409).json({ statusCode: 409, message: error.message }); 
+    return res.status(409).json({ statusCode: 409, message: error.message });
 
   if (error instanceof UnavailableVehicleError)
-    return res.status(409).json({ statusCode: 409, message: error.message }); 
-  
+    return res.status(409).json({ statusCode: 409, message: error.message });
+
   if (error instanceof InvalidPasswordError)
-    return res.status(409).json({ statusCode: 409, message: error.message }); 
+    return res.status(409).json({ statusCode: 409, message: error.message });
 
   return res.status(500).json({ statusCode: 500, message: error.message });
 }

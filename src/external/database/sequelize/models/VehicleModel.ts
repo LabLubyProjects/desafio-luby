@@ -1,43 +1,43 @@
-import { DataTypes } from "sequelize"; 
-import { db } from "../database";
+import { DataTypes } from 'sequelize';
+import { db } from '../database';
 
 const VehicleModel = db.define('vehicle', {
   id: {
     type: DataTypes.STRING,
     primaryKey: true,
-    allowNull: false
+    allowNull: false,
   },
   brand: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   model: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   year: {
     type: DataTypes.INTEGER,
-    allowNull: false
+    allowNull: false,
   },
   km: {
     type: DataTypes.INTEGER,
-    allowNull: false
+    allowNull: false,
   },
   color: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   chassi: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   price: {
     type: DataTypes.INTEGER,
-    allowNull: false
+    allowNull: false,
   },
   status: {
     type: DataTypes.INTEGER,
-    allowNull: false
+    allowNull: false,
   },
 });
 

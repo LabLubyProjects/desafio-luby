@@ -1,4 +1,4 @@
-import { v4 } from "uuid";
+import { v4 } from 'uuid';
 
 export interface Reservation {
   id: string;
@@ -11,9 +11,15 @@ export interface Reservation {
 export default class ReservationImpl implements Reservation {
   id: string;
   date: Date;
-  
-  constructor(public vehicleID: string, public employeeID: string, public price: number, date?: Date, id?: string) {  
-    id ? this.id = id : this.id = v4();
-    date ? this.date = date : this.date = new Date();
+
+  constructor(
+    public vehicleID: string,
+    public employeeID: string,
+    public price: number,
+    date?: Date,
+    id?: string
+  ) {
+    id ? (this.id = id) : (this.id = v4());
+    date ? (this.date = date) : (this.date = new Date());
   }
 }

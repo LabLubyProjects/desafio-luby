@@ -1,36 +1,36 @@
-import { DataTypes } from "sequelize";
-import { db } from "../database";
+import { DataTypes } from 'sequelize';
+import { db } from '../database';
 
-const EmployeeModel = db.define("employee", {
+const EmployeeModel = db.define('employee', {
   id: {
     type: DataTypes.STRING,
     primaryKey: true,
-    allowNull: false
+    allowNull: false,
   },
   cpf: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true
+    unique: true,
   },
   name: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   email: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true
+    unique: true,
   },
   biography: {
-    type: DataTypes.TEXT
+    type: DataTypes.TEXT,
   },
   password: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   type: {
     type: DataTypes.INTEGER,
-    allowNull: false
+    allowNull: false,
   },
 });
 

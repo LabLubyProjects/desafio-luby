@@ -9,10 +9,10 @@ enum ExitStatus {
 
 try {
   db.sync();
-  console.log("[Connected to Database]")
-  associate()
-} catch(error) {
-  console.log("Could not connect to database");
+  console.log('[Connected to Database]');
+  associate();
+} catch (error) {
+  console.log('Could not connect to database');
 }
 
 (async (): Promise<void> => {
@@ -35,5 +35,5 @@ try {
 })();
 
 new App().server.listen(3000, () =>
-console.log('[EXPRESS SERVER RUNNING ON PORT 3000]')
+  console.log('[EXPRESS SERVER RUNNING ON PORT 3000]')
 );

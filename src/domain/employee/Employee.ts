@@ -13,15 +13,22 @@ export interface Employee {
 
 export enum EmployeeType {
   ADMIN = 1,
-  SELLER = 2
+  SELLER = 2,
 }
 
 export default class EmployeeImpl implements Employee {
-
   id: string;
 
-  constructor(public cpf: string, public name: string, public email: string, public biography: string, public password: string, public type: EmployeeType, id?: string) {
-    id ? this.id = id : this.id = v4();
+  constructor(
+    public cpf: string,
+    public name: string,
+    public email: string,
+    public biography: string,
+    public password: string,
+    public type: EmployeeType,
+    id?: string
+  ) {
+    id ? (this.id = id) : (this.id = v4());
   }
 
   isAdmin(): boolean {

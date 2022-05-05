@@ -1,14 +1,14 @@
 import { IsInt, IsNumber, IsUUID, Max, Min } from 'class-validator';
 
 export class InputSell {
-  @IsUUID(4, {message: 'ID do veículo inválido'})
+  @IsUUID(4, { message: 'ID do veículo inválido' })
   vehicleID: string;
 
-  @IsUUID(4, {message: 'ID do funcionário inválido'})
+  @IsUUID(4, { message: 'ID do funcionário inválido' })
   employeeID: string;
 
-  @IsNumber(undefined, { message: 'O preço deve ser um número'})
-  @Min(100, { message: 'O valor mínimo é R$100,00'})
+  @IsNumber(undefined, { message: 'O preço deve ser um número' })
+  @Min(100, { message: 'O valor mínimo é R$100,00' })
   price: number;
 
   constructor(vehicleID: string, employeeID: string, price: number) {
@@ -19,7 +19,7 @@ export class InputSell {
 }
 
 export class InputGetAllSalesByEmployee {
-  @IsUUID(4, {message: 'ID do funcionário inválido'})
+  @IsUUID(4, { message: 'ID do funcionário inválido' })
   employeeID: string;
 
   @IsInt({ message: 'O número da página deve ser um inteiro' })
