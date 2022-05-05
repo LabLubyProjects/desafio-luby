@@ -1,7 +1,7 @@
 import { App } from './app';
 import { db } from '@src/external/database/sequelize/database';
 import associate from '@src/external/database/sequelize/models/associations';
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 
 enum ExitStatus {
   Failure = 1,

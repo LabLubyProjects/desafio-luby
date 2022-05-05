@@ -11,24 +11,24 @@ export default class ExpressAdapter {
     ...repositories: GenericRepository[]
   ) {
     return async (req: Request, h: ResponseToolkit) => {
-        try {
-          if(protect) {
-            authChecker(req);
-          }
-          if (fn instanceof Function) {
-            const obj = await fn(
-              req.params,
-              req.payload,
-              req.query,
-              req.headers,
-              ...repositories
-            );
-            if(obj) return h.response(obj).code(expectedStatusCode);
-            return h.response({}).code(expectedStatusCode);
-          }
-        } catch(error) {
-          return errorHandler(error, h);
+      try {
+        if (protect) {
+          authChecker(req);
         }
+        if (fn instanceof Function) {
+          const obj = await fn(
+            req.params,
+            req.payload,
+            req.query,
+            req.headers,
+            ...repositories
+          );
+          if (obj) return h.response(obj).code(expectedStatusCode);
+          return h.response({}).code(expectedStatusCode);
+        }
+      } catch (error) {
+        return errorHandler(error, h);
+      }
     };
   }
 }

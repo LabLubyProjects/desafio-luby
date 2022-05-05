@@ -5,9 +5,7 @@ import { Employee } from './Employee';
 export default interface EmployeeRepository {
   getAll(pageNumber: number, pageSize: number): Promise<Employee[]>;
   getByID(id: string): Promise<Employee | null>;
-  getByIDWithRelations(
-    id: string
-  ): Promise<{
+  getByIDWithRelations(id: string): Promise<{
     employee: Employee;
     reservations: Reservation[];
     sales: Sale[];

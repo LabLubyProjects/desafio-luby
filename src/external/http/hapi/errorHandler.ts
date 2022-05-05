@@ -1,16 +1,16 @@
-import GenericClassValidatorError from "@src/conectors/errors/GenericClassValidatorError";
-import InvalidPasswordError from "@src/conectors/errors/InvalidPasswordError";
-import InvalidTokenError from "@src/conectors/errors/InvalidTokenError";
-import UnauthorizedError from "@src/conectors/errors/UnauthorizedError";
-import AlreadyExistsError from "@src/useCases/errors/AlreadyExistsError";
-import InsufficientPermissionError from "@src/useCases/errors/InsufficientPermissionError";
-import NotFoundError from "@src/useCases/errors/NotFoundError";
-import UnavailableVehicleError from "@src/useCases/errors/UnavailableVehicleError";
+import GenericClassValidatorError from '@src/conectors/errors/GenericClassValidatorError';
+import InvalidPasswordError from '@src/conectors/errors/InvalidPasswordError';
+import InvalidTokenError from '@src/conectors/errors/InvalidTokenError';
+import UnauthorizedError from '@src/conectors/errors/UnauthorizedError';
+import AlreadyExistsError from '@src/useCases/errors/AlreadyExistsError';
+import InsufficientPermissionError from '@src/useCases/errors/InsufficientPermissionError';
+import NotFoundError from '@src/useCases/errors/NotFoundError';
+import UnavailableVehicleError from '@src/useCases/errors/UnavailableVehicleError';
 
-export default function(error: Error, h: any) {
+export default function (error: Error, h: any) {
   if (error instanceof GenericClassValidatorError)
     return h.response({ statusCode: 400, message: error.message }).code(400);
-   
+
   if (error instanceof InvalidTokenError)
     return h.response({ statusCode: 400, message: error.message }).code(400);
 

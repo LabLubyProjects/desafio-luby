@@ -1,7 +1,7 @@
-import SequelizeEmployeeRepository from "./SequelizeEmployeeRepository";
-import SequelizeReservationRepository from "./SequelizeReservationRepository";
-import SequelizeSaleRepository from "./SequelizeSaleRepository";
-import SequelizeVehicleRepository from "./SequelizeVehicleRepository";
+import SequelizeEmployeeRepository from './SequelizeEmployeeRepository';
+import SequelizeReservationRepository from './SequelizeReservationRepository';
+import SequelizeSaleRepository from './SequelizeSaleRepository';
+import SequelizeVehicleRepository from './SequelizeVehicleRepository';
 
 const repos = {
   employees: new SequelizeEmployeeRepository(),

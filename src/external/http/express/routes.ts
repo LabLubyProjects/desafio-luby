@@ -5,10 +5,9 @@ import SaleController from '@src/conectors/controllers/SaleController';
 import ReservationController from '@src/conectors/controllers/ReservationController';
 import { Router } from 'express';
 import authChecker from './authChecker';
-import repos from "@src/external/database/sequelize/repositories/repos";
+import repos from '@src/external/database/sequelize/repositories/repos';
 
 const router: Router = Router();
-
 
 router.get(
   '/employees',

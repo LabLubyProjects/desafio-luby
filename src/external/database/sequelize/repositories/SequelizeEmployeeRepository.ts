@@ -63,9 +63,7 @@ export default class SequelizeEmployeeRepository implements EmployeeRepository {
     );
   }
 
-  async getByIDWithRelations(
-    id: string
-  ): Promise<{
+  async getByIDWithRelations(id: string): Promise<{
     employee: Employee;
     reservations: Reservation[];
     sales: Sale[];
