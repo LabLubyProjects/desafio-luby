@@ -1,5 +1,9 @@
 import EmployeeImpl, { Employee } from "@src/domain/employee/Employee";
 import EmployeeRepository from "@src/domain/employee/EmployeeRepository";
+import ReservationImpl from "@src/domain/reservation/Reservation";
+import Reservation from "@src/domain/reservation/Reservation";
+import SaleImpl from "@src/domain/sale/Sale";
+import Sale from "@src/domain/sale/Sale";
 import EmployeeModel from "../models/EmployeeModel";
 
 export default class SequelizeEmployeeRepository implements EmployeeRepository {
@@ -22,12 +26,22 @@ export default class SequelizeEmployeeRepository implements EmployeeRepository {
   }
 
   async getByID(id: string): Promise<Employee | null> {
+    const employeeFromDB = await EmployeeModel.findByPk(id);
+    if(!employeeFromDB) return null;
+    return new EmployeeImpl(employeeFromDB.getDataValue('cpf'), employeeFromDB.getDataValue('name'), employeeFromDB.getDataValue('email'), employeeFromDB.getDataValue('biography'), employeeFromDB.getDataValue('password'), employeeFromDB.getDataValue('type'), employeeFromDB.getDataValue('id'));
+  }
+
+  async getByIDWithRelations(id: string): Promise<{employee: Employee, reservations: Reservation[], sales: Sale[]} | null> {
     const employeeFromDB = await EmployeeModel.findByPk(id, {
       include: ['employee_sale', 'employee_reservation']
     });
     if(!employeeFromDB) return null;
-    return new EmployeeImpl(employeeFromDB.getDataValue('cpf'), employeeFromDB.getDataValue('name'), employeeFromDB.getDataValue('email'), employeeFromDB.getDataValue('biography'), employeeFromDB.getDataValue('password'), employeeFromDB.getDataValue('type'), employeeFromDB.getDataValue('id'));
+    const employeeImpl = new EmployeeImpl(employeeFromDB.getDataValue('cpf'), employeeFromDB.getDataValue('name'), employeeFromDB.getDataValue('email'), employeeFromDB.getDataValue('biography'), employeeFromDB.getDataValue('password'), employeeFromDB.getDataValue('type'), employeeFromDB.getDataValue('id'));
+    const reservationsImpl = employeeFromDB.getDataValue('employee_reservation').map((reservation: any) => (new ReservationImpl(reservation.getDataValue('vehicle_id'), reservation.getDataValue('employee_id'), reservation.getDataValue('price'), reservation.getDataValue('date'), reservation.getDataValue('id'))));
+    const salesImpl = employeeFromDB.getDataValue('employee_sale').map((sale: any) => (new SaleImpl(sale.getDataValue('vehicle_id'), sale.getDataValue('employee_id'), sale.getDataValue('price'), sale.getDataValue('status'), sale.getDataValue('date'), sale.getDataValue('id'))));
+    return { employee: employeeImpl, reservations: reservationsImpl, sales: salesImpl };
   }
+
   async getByCPF(cpf: string): Promise<Employee | null> {
     const employeeFromDB = await EmployeeModel.findOne({ where: {cpf: cpf} });
     if(!employeeFromDB) return null;

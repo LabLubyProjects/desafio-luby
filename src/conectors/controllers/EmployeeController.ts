@@ -1,9 +1,9 @@
 import EmployeeRepository from "@src/domain/employee/EmployeeRepository";
 import CreateEmployeeUseCase from "@src/useCases/employeeRelated/CreateEmployeeUseCase";
 import DeleteEmployeeUseCase from "@src/useCases/employeeRelated/DeleteEmployeeUseCase";
-import { InputCreateEmployee, InputDeleteEmployee, InputGetAllEmployees, InputGetEmployeeByID, InputLoginEmployee, InputUpdateEmployee, OutputEmployee } from "@src/useCases/employeeRelated/EmployeeIO";
+import { InputCreateEmployee, InputDeleteEmployee, InputGetAllEmployees, InputGetEmployeeWithRelations, InputLoginEmployee, InputUpdateEmployee, OutputEmployee, OutputGetEmployeeWithRelations } from "@src/useCases/employeeRelated/EmployeeIO";
 import GetAllEmployeesUseCase from "@src/useCases/employeeRelated/GetAllEmployeesUseCase";
-import GetEmployeeByIDUseCase from "@src/useCases/employeeRelated/GetEmployeeByIDUseCase";
+import GetEmployeeWithRelationsUseCase from "@src/useCases/employeeRelated/GetEmployeeWithRelationsUseCase";
 import LoginEmployeeUseCase from "@src/useCases/employeeRelated/LoginEmployeeUseCase";
 import UpdateEmployeeUseCase from "@src/useCases/employeeRelated/UpdateEmployeeUseCase";
 import InvalidPasswordError from "../errors/InvalidPasswordError";
@@ -91,19 +91,19 @@ export default class EmployeeController extends BaseController {
     return new GetAllEmployeesUseCase(employeeRepository).handle(input);
   }
 
-  static async getEmployeesByID(
+  static async getEmployeeWithRelations(
     params: any,
     body: any,
     query: any,
     headers: any,
     employeeRepository: EmployeeRepository
-  ): Promise<OutputEmployee> {
+  ): Promise<OutputGetEmployeeWithRelations> {
     const { id } = params;
-    const input = new InputGetEmployeeByID(id);
+    const input = new InputGetEmployeeWithRelations(id);
     
     await BaseController.validateInput(input);
     
-    return new GetEmployeeByIDUseCase(employeeRepository).handle(input);
+    return new GetEmployeeWithRelationsUseCase(employeeRepository).handle(input);
   }
 
   static async deleteEmployee(

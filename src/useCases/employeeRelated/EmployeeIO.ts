@@ -1,6 +1,8 @@
 import { EmployeeType } from "@src/domain/employee/Employee";
 import { IsCPF } from "brazilian-class-validator";
 import { IsEmail, IsEnum, IsInt, IsOptional, IsUUID, Max, Min, MinLength } from "class-validator";
+import { OutputReservationWithIDs } from "../reservationRelated/ReservationIO";
+import { OutputSaleWithIDs } from "../saleRelated/SaleIO";
 
 export class InputCreateEmployee {
   @IsCPF({message: 'CPF inválido'})
@@ -46,6 +48,20 @@ export class InputGetEmployeeByID {
   constructor(id: string) {
     this.id = id;
   }
+}
+
+export class InputGetEmployeeWithRelations {
+  @IsUUID(4, {message: 'ID do funcionário inválido'})
+  id: string;
+
+  constructor(id: string) {
+    this.id = id;
+  }
+}
+
+export interface OutputGetEmployeeWithRelations extends OutputEmployee {
+  reservations: OutputReservationWithIDs[],
+  sales: OutputSaleWithIDs[]
 }
 
 export class InputDeleteEmployee {

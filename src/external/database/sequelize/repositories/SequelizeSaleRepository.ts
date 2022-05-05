@@ -15,7 +15,7 @@ export default class SequelizeSaleRepository implements SaleRepository {
     return sales;
   }
   async create(sale: Sale): Promise<string> {
-    await SaleModel.create({ vehicle_id: sale.vehicleID, employee_id: sale.employeeID, price: sale.price, status: sale.vehicleStatus });
+    await SaleModel.create({ id: sale.id, vehicle_id: sale.vehicleID, employee_id: sale.employeeID, price: sale.price, status: sale.vehicleStatus, date: sale.date});
     return sale.id;
   }
 }

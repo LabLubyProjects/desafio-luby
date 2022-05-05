@@ -30,7 +30,7 @@ router.get(
 router.get(
   '/employees/:id',
   ExpressAdapter.create(
-    EmployeeController.getEmployeesByID,
+    EmployeeController.getEmployeeWithRelations,
     200,
     repos.employees
   )
@@ -117,7 +117,7 @@ router.delete(
 );
 
 router.get(
-  '/vehicles/status/:status',
+  '/vehicles/filter/:status',
   ExpressAdapter.create(
     VehicleController.filterByStatus,
     200,
@@ -153,7 +153,7 @@ router.get(
   ExpressAdapter.create(
     ReservationController.getAllReservationsByEmployee,
     200,
-    repos.sales,
+    repos.reservations,
     repos.employees,
     repos.vehicles
   )
@@ -164,7 +164,7 @@ router.post(
   ExpressAdapter.create(
     ReservationController.reserve,
     201,
-    repos.sales,
+    repos.reservations,
     repos.employees,
     repos.vehicles
   )

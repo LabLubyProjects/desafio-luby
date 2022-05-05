@@ -1,6 +1,7 @@
 import ReservationImpl from "@src/domain/reservation/Reservation";
 import { VehicleStatus } from "@src/domain/vehicle/Vehicle";
 import NotFoundError from "../errors/NotFoundError";
+import UnavailableVehicleError from "../errors/UnavailableVehicleError";
 import { format } from "../util/dateFormat";
 import BaseReservationRelatedUseCase from "./BaseReservationRelatedUseCase";
 import { InputReserve, OutputReservation } from "./ReservationIO";
@@ -12,6 +13,8 @@ export default class ReserveUseCase extends BaseReservationRelatedUseCase {
 
     const vehicle = await this.vehicleRepository.getByID(inputReserve.vehicleID);
     if(!vehicle) throw new NotFoundError();
+
+    if(vehicle.status !== VehicleStatus.AVAILABLE) throw new UnavailableVehicleError("Carro não disponível");
 
     const inputReservation = new ReservationImpl(inputReserve.vehicleID, inputReserve.employeeID, inputReserve.price);
     await this.reservationRepository.create(inputReservation);

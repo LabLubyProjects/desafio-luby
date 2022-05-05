@@ -46,3 +46,11 @@ export interface OutputReservation {
   employeeName: string;
   date: string;
 }
+
+export interface OutputReservationWithIDs {
+  id: string;
+  vehicleID: string;
+  employeeID: string;
+  price: number;
+  date: string;
+}

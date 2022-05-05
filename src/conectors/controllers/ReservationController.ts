@@ -12,9 +12,9 @@ export default class ReservationController extends BaseController{
     body: any,
     query: any,
     headers: any,
-    vehicleRepository: VehicleRepository,
+    reservationRepository: ReservationRepository,
     employeeRepository: EmployeeRepository,
-    reservationRepository: ReservationRepository
+    vehicleRepository: VehicleRepository
   ): Promise<OutputReservation> {
     const token = headers.authorization.split(" ")[1];
     const { vehicleID, price } = body;
@@ -31,9 +31,9 @@ export default class ReservationController extends BaseController{
     body: any,
     query: any,
     headers: any,
-    vehicleRepository: VehicleRepository,
+    reservationRepository: ReservationRepository,
     employeeRepository: EmployeeRepository,
-    reservationRepository: ReservationRepository
+    vehicleRepository: VehicleRepository
   ): Promise<OutputReservation[]> {
     const { employeeID } = params;
     const { page, size } = query; 

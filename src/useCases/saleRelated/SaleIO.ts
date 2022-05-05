@@ -47,3 +47,11 @@ export interface OutputSale {
   employeeName: string;
   date: string;
 }
+
+export interface OutputSaleWithIDs {
+  id: string;
+  vehicleID: string;
+  employeeID: string;
+  price: number;
+  date: string;
+}

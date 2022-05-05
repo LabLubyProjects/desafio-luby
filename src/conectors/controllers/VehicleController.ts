@@ -91,14 +91,15 @@ export default class VehicleController extends BaseController {
     vehicleRepository: VehicleRepository,
     employeeRepository: EmployeeRepository
   ): Promise<OutputVehicle[]> {
-    const { status, page, size } = query;
+    const { status } = params;
+    const { page, size } = query;
     
     let input;
 
     if(page && size)
-      input = new InputFilterVehicleByStatus(status, Number.parseInt(page), Number.parseInt(size));
+      input = new InputFilterVehicleByStatus(Number.parseInt(status), Number.parseInt(page), Number.parseInt(size));
     else
-      input = new InputFilterVehicleByStatus(status);  
+      input = new InputFilterVehicleByStatus(Number.parseInt(status));  
     
     await BaseController.validateInput(input);
     

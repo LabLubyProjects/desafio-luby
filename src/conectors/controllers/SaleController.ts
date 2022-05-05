@@ -12,14 +12,16 @@ export default class SaleController extends BaseController{
     body: any,
     query: any,
     headers: any,
-    vehicleRepository: VehicleRepository,
+    saleRepository: SaleRepository,
     employeeRepository: EmployeeRepository,
-    saleRepository: SaleRepository
+    vehicleRepository: VehicleRepository
   ): Promise<OutputSale> {
     const token = headers.authorization.split(" ")[1];
     const { vehicleID, price } = body;
     const employeeID = BaseController.decodeIDFromToken(token);
     const input = new InputSell(vehicleID, employeeID, price); 
+
+    await BaseController.validateInput(input)
 
     return new SellUseCase(saleRepository, employeeRepository, vehicleRepository).handle(input);
   }
@@ -29,9 +31,9 @@ export default class SaleController extends BaseController{
     body: any,
     query: any,
     headers: any,
-    vehicleRepository: VehicleRepository,
+    saleRepository: SaleRepository,
     employeeRepository: EmployeeRepository,
-    saleRepository: SaleRepository
+    vehicleRepository: VehicleRepository
   ): Promise<OutputSale[]> {
     const { employeeID } = params;
     const { page, size } = query; 

@@ -15,8 +15,8 @@ export default class SequelizeReservationRepository implements ReservationReposi
     const Reservations = ReservationsFromDB.map(Reservation => (new ReservationImpl(Reservation.getDataValue('vehicle_id'), Reservation.getDataValue('employee_id'), Reservation.getDataValue('price'), Reservation.getDataValue('status'), Reservation.getDataValue('date'))));
     return Reservations;
   }
-  async create(Reservation: Reservation): Promise<string> {
-    await ReservationModel.create({ vehicle_id: Reservation.vehicleID, employee_id: Reservation.employeeID, price: Reservation.price });
-    return Reservation.id;
+  async create(reservation: Reservation): Promise<string> {
+    await ReservationModel.create({ id: reservation.id, vehicle_id: reservation.vehicleID, employee_id: reservation.employeeID, price: reservation.price, date: reservation.date });
+    return reservation.id;
   }
 }
