@@ -24,7 +24,9 @@ export default class EmployeeController extends BaseController {
 
     const user = await (new LoginEmployeeUseCase(employeeRepository).handle(input));
     
-    if(!BaseController.compareHashedPassword(password, user.password))
+    const passwordMatches = await BaseController.compareHashedPassword(password, user.password);
+
+    if(!passwordMatches)
       throw new InvalidPasswordError();
     
     return {jwt: BaseController.generateJWT(user.id)};  
