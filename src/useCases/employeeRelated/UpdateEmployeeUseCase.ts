@@ -26,7 +26,7 @@ export default class UpdateEmployeeUseCase extends BaseEmployeeRelatedUseCase {
       employee.biography = inputUpdateEmployee.biography;
     if (inputUpdateEmployee.password)
       employee.password = inputUpdateEmployee.password;
-    if (inputUpdateEmployee.type && employee.isAdmin())
+    if (inputUpdateEmployee.type && sourceEmployee.isAdmin())
       employee.type = inputUpdateEmployee.type;
 
     const updatedEmployee = await this.employeeRepository.update(employee);

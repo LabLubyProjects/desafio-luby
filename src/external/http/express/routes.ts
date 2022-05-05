@@ -3,20 +3,12 @@ import EmployeeController from '@src/conectors/controllers/EmployeeController';
 import VehicleController from '@src/conectors/controllers/VehicleController';
 import SaleController from '@src/conectors/controllers/SaleController';
 import ReservationController from '@src/conectors/controllers/ReservationController';
-import SequelizeEmployeeRepository from '@src/external/database/sequelize/repositories/SequelizeEmployeeRepository';
-import SequelizeReservationRepository from '@src/external/database/sequelize/repositories/SequelizeReservationRepository';
-import SequelizeSaleRepository from '@src/external/database/sequelize/repositories/SequelizeSaleRepository';
-import SequelizeVehicleRepository from '@src/external/database/sequelize/repositories/SequelizeVehicleRepository';
 import { Router } from 'express';
 import authChecker from './authChecker';
+import repos from "@src/external/database/sequelize/repositories/repos";
 
 const router: Router = Router();
-const repos = {
-  employees: new SequelizeEmployeeRepository(),
-  vehicles: new SequelizeVehicleRepository(),
-  sales: new SequelizeSaleRepository(),
-  reservations: new SequelizeReservationRepository(),
-};
+
 
 router.get(
   '/employees',
@@ -110,7 +102,7 @@ router.get(
 );
 
 router.get(
-  '/sales/:employeeID',
+  '/employees/:employeeID/sales',
   ExpressAdapter.create(
     SaleController.getAllSalesByEmployee,
     200,
@@ -132,7 +124,7 @@ router.post(
 );
 
 router.get(
-  '/reservations/:employeeID',
+  '/employees/:employeeID/reservations',
   ExpressAdapter.create(
     ReservationController.getAllReservationsByEmployee,
     200,

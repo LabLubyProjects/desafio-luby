@@ -3,9 +3,6 @@ import { validate } from 'class-validator';
 import GenericClassValidatorError from '../errors/GenericClassValidatorError';
 import { hash, genSalt, compare } from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 export interface DecodedJWT {
   id: string;
