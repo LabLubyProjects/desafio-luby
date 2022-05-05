@@ -55,7 +55,7 @@ const init = async () => {
     handler: HapiAdapter.create(
       EmployeeController.getAllEmployees,
       200,
-      true,
+      false,
       repos.employees
     ),
   });
@@ -65,7 +65,7 @@ const init = async () => {
     handler: HapiAdapter.create(
       EmployeeController.getEmployeeWithRelations,
       200,
-      true,
+      false,
       repos.employees
     ),
   });
@@ -75,7 +75,7 @@ const init = async () => {
     handler: HapiAdapter.create(
       EmployeeController.createEmployee,
       201,
-      true,
+      false,
       repos.employees
     ),
   });
@@ -85,7 +85,7 @@ const init = async () => {
     handler: HapiAdapter.create(
       EmployeeController.login,
       200,
-      true,
+      false,
       repos.employees
     ),
   });
@@ -116,7 +116,7 @@ const init = async () => {
     handler: HapiAdapter.create(
       VehicleController.getAllVehicles,
       200,
-      true,
+      false,
       repos.vehicles,
       repos.employees
     ),
@@ -127,7 +127,7 @@ const init = async () => {
     handler: HapiAdapter.create(
       VehicleController.getVehiclesByID,
       200,
-      true,
+      false,
       repos.vehicles,
       repos.employees
     ),
@@ -138,7 +138,7 @@ const init = async () => {
     handler: HapiAdapter.create(
       VehicleController.filterByStatus,
       200,
-      true,
+      false,
       repos.vehicles,
       repos.employees
     ),
@@ -172,7 +172,7 @@ const init = async () => {
     handler: HapiAdapter.create(
       SaleController.getAllSalesByEmployee,
       200,
-      true,
+      false,
       repos.sales,
       repos.employees,
       repos.vehicles
@@ -197,7 +197,7 @@ const init = async () => {
     handler: HapiAdapter.create(
       ReservationController.getAllReservationsByEmployee,
       200,
-      true,
+      false,
       repos.reservations,
       repos.employees,
       repos.vehicles
