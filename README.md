@@ -135,7 +135,7 @@ Rode o comando do sequelize para criar o banco
 yarn sequelize db:create
 ```
 
-Inicie o servidor local com Express ou Hapi
+Inicie o servidor local com Express (porta 3000) ou Hapi (porta 3001)
 
 ```
 yarn start:express
